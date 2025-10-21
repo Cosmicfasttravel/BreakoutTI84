@@ -220,14 +220,14 @@ int main() {
         kb_Scan();
         if (kb_Data[7] & kb_Left) {
             paddle.x -= 4;
-            if (paddle.x < 10) {
-                paddle.x = 10;
+            if (paddle.x <= 4) {
+                paddle.x = 4;
             }
         }
         if (kb_Data[7] & kb_Right) {
             paddle.x += 4;
-            if (paddle.x > 270) {
-                paddle.x = 270;
+            if (paddle.x > 276) {
+                paddle.x = 276;
             }
         }
         if (kb_Data[7] & kb_Up && isBallSpawned == false) {

@@ -890,7 +890,7 @@ BB9_10:
 	section	.text,"ax",@progbits
 	public	_main
 _main:
-	ld	hl, -37
+	ld	hl, -31
 	call	__frameset
 	ld	hl, 3
 	ld	(ix - 4), hl
@@ -941,11 +941,11 @@ BB10_1:
 	ld	e, iyl
 	ld	d, iyh
 	ex	de, hl
-	ld.sis	de, 11
+	ld.sis	de, 5
 	or	a, a
 	sbc.sis	hl, de
 	jr	nc, BB10_4
-	ld.sis	hl, 10
+	ld.sis	hl, 4
 	ex	de, hl
 	ld	iyl, e
 	ld	iyh, d
@@ -974,11 +974,11 @@ BB10_5:
 	ld	e, iyl
 	ld	d, iyh
 	ex	de, hl
-	ld.sis	de, 270
+	ld.sis	de, 276
 	or	a, a
 	sbc.sis	hl, de
 	jr	c, BB10_8
-	ld.sis	hl, 270
+	ld.sis	hl, 276
 	ex	de, hl
 	ld	iyl, e
 	ld	iyh, d
@@ -1069,13 +1069,13 @@ BB10_14:
 	or	a, a
 	sbc	hl, bc
 	call	pe, __setflag
-	jp	m, BB10_56
+	jp	m, BB10_57
 	ld	a, (ix - 7)
 	and	a, 1
 	bit	0, a
 	jr	nz, BB10_17
 	ld	(ix - 4), de
-	jp	BB10_55
+	jp	BB10_56
 BB10_17:
 	ld	hl, 60
 	push	hl
@@ -1125,14 +1125,14 @@ BB10_22:
 	ld	de, 60
 	or	a, a
 	sbc	hl, de
-	jp	z, BB10_36
+	jp	z, BB10_37
 	push	bc
 	pop	de
 	add	iy, de
 	bit	0, (iy + 10)
 	push	bc
 	pop	hl
-	jp	z, BB10_35
+	jp	z, BB10_36
 	ld	de, (ix - 13)
 	push	de
 	ld	(ix - 22), hl
@@ -1181,84 +1181,68 @@ BB10_22:
 	sbc	hl, de
 	ld	hl, (ix - 22)
 	call	pe, __setflag
-	jp	m, BB10_35
+	jp	m, BB10_36
 	ld	hl, (ix - 25)
 	or	a, a
 	sbc	hl, bc
 	ld	hl, (ix - 22)
 	call	pe, __setflag
-	jp	m, BB10_35
+	jp	m, BB10_36
 	ld	hl, (ix - 13)
-	ld	hl, (hl)
-	ld	(ix - 25), hl
-	ld	de, 0
-	push	de
-	pop	bc
+	ld	bc, (hl)
+	ld	hl, _paddle
+	ld	de, (hl)
+	ld	(ix - 13), bc
+	ld	l, c
+	ld	h, b
+	or	a, a
+	sbc.sis	hl, de
+	jr	nc, BB10_28
+	ld	iy, 0
+	lea	bc, iy
+	ld	hl, (ix - 13)
 	ld	c, l
 	ld	b, h
-	ld	(ix - 31), bc
-	ld	hl, _paddle
-	ld	hl, (hl)
-	ld	(ix - 28), hl
-	ld	e, l
-	ld	d, h
-	push	bc
-	pop	hl
-	ld	bc, 20
-	add	hl, bc
-	push	de
-	pop	bc
-	or	a, a
-	sbc	hl, bc
-	push	hl
-	pop	bc
-	push	bc
-	pop	iy
-	add	iy, iy
-	sbc	hl, hl
-	push	hl
-	pop	iy
-	push	bc
-	pop	hl
-	lea	bc, iy
-	add	hl, bc
-	call	__ixor
-	push	hl
-	pop	iy
-	ld	(ix - 34), de
-	ex	de, hl
-	ld	de, (ix - 31)
-	ld	bc, 20
-	add	hl, bc
-	ld	(ix - 13), hl
-	ld	hl, (ix - 25)
-	ld	bc, (ix - 28)
-	or	a, a
-	sbc.sis	hl, bc
-	ld	(ix - 37), iy
-	jr	c, BB10_28
-	ld	hl, (ix - 13)
-	push	de
-	pop	bc
-	or	a, a
-	sbc	hl, bc
-	jp	nc, BB10_32
-BB10_28:
-	ld	bc, 40
-	ld	iy, (ix - 34)
-	add	iy, bc
-	push	de
-	pop	hl
-	ld	bc, (ix - 13)
-	or	a, a
-	sbc	hl, bc
-	ld	hl, (ix - 22)
-	jp	c, BB10_35
+	ld	iyl, e
+	ld	iyh, d
 	lea	hl, iy
+	ld	de, 20
+	add	hl, de
+	ex	de, hl
+	jr	BB10_29
+BB10_28:
+	ld	bc, 0
+	push	bc
+	pop	iy
+	ld	iyl, e
+	ld	iyh, d
+	ld	hl, (ix - 13)
+	ld	c, l
+	ld	b, h
+	lea	hl, iy
+	ld	de, 20
+	add	hl, de
+	push	hl
+	pop	de
+	or	a, a
+	sbc	hl, bc
+	jr	nc, BB10_33
+BB10_29:
+	ld	(ix - 13), de
+	ld	de, 40
+	add	iy, de
+	push	bc
+	pop	hl
+	ld	de, (ix - 13)
 	or	a, a
 	sbc	hl, de
 	ld	hl, (ix - 22)
-	jp	c, BB10_35
+	jp	c, BB10_36
+	lea	hl, iy
+	or	a, a
+	sbc	hl, bc
+	ld	hl, (ix - 22)
+	jp	c, BB10_36
 	ex	de, hl
 	ld	hl, _balls
 	push	hl
@@ -1266,7 +1250,7 @@ BB10_28:
 	ld	hl, (ix - 22)
 	add	iy, de
 	bit	0, (iy + 11)
-	jp	nz, BB10_35
+	jp	nz, BB10_36
 	ld	(ix - 13), iy
 	ex	de, hl
 	ld	hl, _balls
@@ -1281,37 +1265,28 @@ BB10_28:
 	call	z, _random
 	ld	iy, (ix - 13)
 	lea	hl, iy + 11
-	ld	(ix - 13), hl
 	ld	de, (ix - 22)
 	ld	iy, _balls
 	add	iy, de
-	scf
-	sbc	hl, hl
-	ld	(iy + 7), hl
-	ld	hl, (ix - 37)
-	ld.sis	bc, 10
-	call	__sremu
-	inc.sis	hl
-	ld	de, 0
-	ld	e, l
-	ld	d, h
+	ld	de, -1
+	ld	(iy + 7), de
+	ld	de, 1
 	ld	iy, (ix - 25)
-	ld	(iy + 4), de
-	jp	BB10_34
-BB10_32:
+	jr	BB10_35
+BB10_33:
 	ld	hl, (ix - 22)
 	push	hl
 	pop	de
 	ld	iy, _balls
 	add	iy, de
 	bit	0, (iy + 11)
-	jp	nz, BB10_35
+	jr	nz, BB10_36
 	ex	de, hl
 	ld	hl, _balls
 	push	hl
 	pop	iy
 	add	iy, de
-	ld	(ix - 25), iy
+	ld	(ix - 13), iy
 	ld	hl, (iy + 4)
 	add	hl, bc
 	or	a, a
@@ -1319,28 +1294,17 @@ BB10_32:
 	call	z, _random
 	ld	iy, (ix - 16)
 	lea	hl, iy + 11
-	ld	(ix - 13), hl
 	ld	de, (ix - 22)
 	ld	iy, _balls
 	add	iy, de
-	scf
-	sbc	hl, hl
-	ld	(iy + 7), hl
-	ld	hl, (ix - 37)
-	ld.sis	bc, 10
-	call	__sremu
-	ld	de, 0
-	ld	e, l
-	ld	d, h
-	ex	de, hl
-	call	__inot
-	ld	iy, (ix - 25)
-	ld	(iy + 4), hl
-BB10_34:
-	ld	hl, (ix - 13)
+	ld	de, -1
+	ld	(iy + 7), de
+	ld	iy, (ix - 13)
+BB10_35:
+	ld	(iy + 4), de
 	ld	(hl), 1
 	ld	hl, (ix - 22)
-BB10_35:
+BB10_36:
 	ld	iy, (ix - 16)
 	lea	iy, iy + 12
 	ld	(ix - 16), iy
@@ -1348,36 +1312,36 @@ BB10_35:
 	add	hl, de
 	ld	iy, _balls
 	jp	BB10_22
-BB10_36:
+BB10_37:
 	call	__Z8draw_boxv
 	ld	iy, _boxes
-BB10_37:
+BB10_38:
 	lea	hl, iy
 	ld	de, _boxes+3200
 	or	a, a
 	sbc	hl, de
-	jp	z, BB10_52
+	jp	z, BB10_53
 	ld	(ix - 13), iy
 	bit	0, (iy + 15)
-	jr	nz, BB10_40
-BB10_39:
+	jr	nz, BB10_41
+BB10_40:
 	ld	iy, (ix - 13)
 	lea	iy, iy + 16
-	jr	BB10_37
-BB10_40:
+	jr	BB10_38
+BB10_41:
 	or	a, a
 	sbc	hl, hl
 	push	hl
 	pop	bc
 	ld	hl, _balls
 	ld	(ix - 16), hl
-BB10_41:
+BB10_42:
 	push	bc
 	pop	hl
 	ld	de, 60
 	or	a, a
 	sbc	hl, de
-	jr	z, BB10_39
+	jr	z, BB10_40
 	push	bc
 	pop	hl
 	push	hl
@@ -1386,7 +1350,7 @@ BB10_41:
 	ld	iy, _balls
 	add	iy, de
 	bit	0, (iy + 10)
-	jp	z, BB10_51
+	jp	z, BB10_52
 	ld	de, (ix - 22)
 	ld	hl, _balls
 	add	hl, de
@@ -1402,7 +1366,7 @@ BB10_41:
 	or	a, a
 	sbc	hl, bc
 	call	pe, __setflag
-	jp	m, BB10_51
+	jp	m, BB10_52
 	ld	iy, (ix - 13)
 	ld	hl, (iy + 6)
 	ld	bc, (ix - 25)
@@ -1411,7 +1375,7 @@ BB10_41:
 	or	a, a
 	sbc	hl, de
 	call	pe, __setflag
-	jp	m, BB10_51
+	jp	m, BB10_52
 	ld	bc, (ix - 22)
 	ld	hl, _balls
 	push	hl
@@ -1425,7 +1389,7 @@ BB10_41:
 	ld	(ix - 31), hl
 	sbc	hl, bc
 	call	pe, __setflag
-	jp	m, BB10_51
+	jp	m, BB10_52
 	ld	iy, (ix - 13)
 	ld	hl, (iy + 9)
 	add	hl, bc
@@ -1433,7 +1397,7 @@ BB10_41:
 	or	a, a
 	sbc	hl, bc
 	call	pe, __setflag
-	jp	m, BB10_51
+	jp	m, BB10_52
 	ld	bc, (ix - 22)
 	ld	hl, _balls
 	push	hl
@@ -1453,12 +1417,12 @@ BB10_41:
 	or	a, a
 	sbc	hl, de
 	call	pe, __setflag
-	jp	m, BB10_50
+	jp	m, BB10_51
 	ld	hl, (ix - 28)
 	or	a, a
 	sbc	hl, bc
 	call	pe, __setflag
-	jp	m, BB10_50
+	jp	m, BB10_51
 	ld	iy, (ix - 16)
 	lea	hl, iy + 7
 	ld	(ix - 31), hl
@@ -1466,7 +1430,7 @@ BB10_41:
 	ld	iy, _balls
 	add	iy, de
 	ld	iy, (iy + 7)
-BB10_50:
+BB10_51:
 	lea	hl, iy
 	call	__ineg
 	ld	iy, (ix - 31)
@@ -1477,7 +1441,7 @@ BB10_50:
 	ld	(iy + 11), 0
 	ld	iy, (ix - 13)
 	ld	(iy + 15), 0
-BB10_51:
+BB10_52:
 	ld	iy, (ix - 16)
 	lea	iy, iy + 12
 	ld	(ix - 16), iy
@@ -1486,20 +1450,20 @@ BB10_51:
 	add	hl, de
 	push	hl
 	pop	bc
-	jp	BB10_41
-BB10_52:
+	jp	BB10_42
+BB10_53:
 	ld	hl, (ix - 19)
 	add	hl, bc
 	or	a, a
 	sbc	hl, bc
 	ld	de, -1
-	jr	z, BB10_54
+	jr	z, BB10_55
 	ld	de, 0
-BB10_54:
+BB10_55:
 	ld	hl, (ix - 4)
 	add	hl, de
 	ld	(ix - 4), hl
-BB10_55:
+BB10_56:
 	or	a, a
 	sbc	hl, hl
 	push	hl
@@ -1557,7 +1521,7 @@ BB10_55:
 	pop	hl
 	call	_gfx_SwapDraw
 	jp	BB10_1
-BB10_56:
+BB10_57:
 	or	a, a
 	sbc	hl, hl
 	push	hl
@@ -1671,7 +1635,6 @@ _switch.table._Z12random_colorv:
 	extern	_gfx_SetTextTransparentColor
 	extern	__frameset
 	extern	_srand
-	extern	__inot
 	extern	_boot_sprintf
 	extern	_gfx_SetTextBGColor
 	extern	__Unwind_SjLj_Register
@@ -1688,12 +1651,10 @@ _switch.table._Z12random_colorv:
 	extern	__iand
 	extern	_gfx_FillRectangle
 	extern	__iremu
-	extern	__ixor
 	extern	__imulu
 	extern	_gfx_SetColor
 	extern	__land
 	extern	__ineg
-	extern	__sremu
 	extern	_gfx_PrintStringXY
 	extern	_gfx_FillCircle
 	extern	_os_GetCSC

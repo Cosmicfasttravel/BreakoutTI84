@@ -7,9 +7,9 @@ Section          Base   Top    High   Length
 .init.reruncheck D1A944 D1A944             0h
 .init            D1A944 D1A970            2Ch
 .fini            D1A970 D1A9A4            34h
-.text            D1A9A4 D1B8B1           F0Dh
-.data            D1B8B1 D1B8C4            13h
-.rodata          D1B8C4 D1B927            63h
+.text            D1A9A4 D1B82A           E86h
+.data            D1B82A D1B83D            13h
+.rodata          D1B83D D1B8A0            63h
 .init_array      000000 000000             0h
 .ctors           000000 000000             0h
 .dtors           000000 000000             0h
@@ -34,28 +34,23 @@ __iand                                      = D1A9A8
 __frameset                                  = D1A9BF
 __frameset0                                 = D1A9CD
 __idvrmu                                    = D1A9D8
-__idvrmu.hijack_a_iters_ude_dividend        = D1A9DC
 __imulu                                     = D1A9F0
 __ineg                                      = D1AA20
-__inot                                      = D1AA29
-__iremu                                     = D1AA33
-__ishl                                      = D1AA3A
-__sdvrmu                                    = D1AA60
-__setflag                                   = D1AA70
-__sremu                                     = D1AA7A
-__ixor                                      = D1AA81
+__iremu                                     = D1AA29
+__ishl                                      = D1AA30
+__setflag                                   = D1AA56
 _boot_sprintf                               = 0000BC
-_os_DisableHomeTextBuffer                   = D1AA98
-_os_EnableHomeTextBuffer                    = D1AAAA
-_random                                     = D1AABC
-__setstate                                  = D1AB1A
-__state                                     = D1B8B1
+_os_DisableHomeTextBuffer                   = D1AA60
+_os_EnableHomeTextBuffer                    = D1AA72
+_random                                     = D1AA84
+__setstate                                  = D1AAE2
+__state                                     = D1B82A
 _os_GetCSC                                  = 021D3C
-_srand                                      = D1AB2A
-.missingappvar                              = D1B8C4
-.libloadname                                = D1B8C9
+_srand                                      = D1AAF2
+.missingappvar                              = D1B83D
+.libloadname                                = D1B842
 .libloadnamelen                             = 000007
-.webaddress                                 = D1B8D1
+.webaddress                                 = D1B84A
 __start                                     = D1A944
 ___exithl                                   = D1A970
 skip._exit                                  = D1A970
@@ -63,25 +58,25 @@ skip.__Exit                                 = D1A970
 skip._abort                                 = D1A970
 _exit.sp                                    = D1A971
 _exit.flash_wait_states                     = D1A97B
-__Z12random_colorv                          = D1AB32
-__Z24generate_connected_levelv              = D1AB4E
-__Z10spawn_balliiii                         = D1AF34
-__Z8draw_boxv                               = D1AF8E
-__Z11update_ballP4ball                      = D1B002
-__Z9draw_ballPK4ball                        = D1B0D7
-__Z5pausev                                  = D1B104
-__Z11draw_paddleth                          = D1B10C
-__Z9box_clearv                              = D1B132
-_main                                       = D1B270
-_paddle                                     = D1B8C1
+__Z12random_colorv                          = D1AAFA
+__Z24generate_connected_levelv              = D1AB16
+__Z10spawn_balliiii                         = D1AEFC
+__Z8draw_boxv                               = D1AF56
+__Z11update_ballP4ball                      = D1AFCA
+__Z9draw_ballPK4ball                        = D1B09F
+__Z5pausev                                  = D1B0CC
+__Z11draw_paddleth                          = D1B0D4
+__Z9box_clearv                              = D1B0FA
+_main                                       = D1B238
+_paddle                                     = D1B83A
 _balls                                      = D052C6
 _boxes                                      = D05302
-___const._Z24generate_connected_levelv.dirY = D1B8E6
-___const._Z24generate_connected_levelv.dirX = D1B8F8
-_.str                                       = D1B90A
-_.str.1                                     = D1B914
-_.str.2                                     = D1B917
-_switch.table._Z12random_colorv             = D1B91F
+___const._Z24generate_connected_levelv.dirY = D1B85F
+___const._Z24generate_connected_levelv.dirX = D1B871
+_.str                                       = D1B883
+_.str.1                                     = D1B88D
+_.str.2                                     = D1B890
+_switch.table._Z12random_colorv             = D1B898
 lib.LibLoad                                 = D1A8EF
 _#gfx_Begin                                 = D1A902
 _#gfx_End                                   = D1A906
