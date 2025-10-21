@@ -1,0 +1,41 @@
+Section          Base   Top    High   Length
+---------------- ------ ------ ------ -------
+.icon            D1A882 D1A897            15h
+.init.libs       D1A897 D1A897             0h
+.libs            D1A897 D1A897             0h
+.init.clock      D1A897 D1A897             0h
+.init.reruncheck D1A897 D1A897             0h
+.init            D1A897 D1A8B7            20h
+.fini            D1A8B7 D1A8EB            34h
+.text            D1A8EB D1A913            28h
+.data            D1A913 D1A913             0h
+.rodata          D1A913 D1A913             0h
+.init_array      000000 000000             0h
+.ctors           000000 000000             0h
+.dtors           000000 000000             0h
+.fini_array      000000 000000             0h
+.bss             D052C6 D052C6 D13FD8      0h
+.header          D1A87F D1A882             3h
+
+Label                       Value
+-------------------------   ------
+___low_bss                = D052C6
+___len_bss                = 000000
+___heaptop                = D13FD8
+___heapbot                = D052C6
+___libs                   = D1A897
+___init_array_count       = 000000
+___ctors_count            = 000000
+___dtors_count            = 000000
+___fini_array_count       = 000000
+__stack                   = D1A87E
+_os_DisableHomeTextBuffer = D1A8EB
+_os_EnableHomeTextBuffer  = D1A8FD
+__start                   = D1A897
+___exithl                 = D1A8B7
+skip._exit                = D1A8B7
+skip.__Exit               = D1A8B7
+skip._abort               = D1A8B7
+_exit.sp                  = D1A8B8
+_exit.flash_wait_states   = D1A8C2
+_main                     = D1A90F
