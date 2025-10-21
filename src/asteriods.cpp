@@ -268,14 +268,23 @@ int main() {
                 update_ball(&ball);
                 draw_ball(&ball);
                 if (ball.y >= paddle.y - 3 - ball.radius && ball.y <= paddle.y - ball.radius) {
-                    if (ball.x >= paddle.x && ball.x <= paddle.x + 40) {
-                        if (ball.incX == 0) ball.incX = (randInt(1,2) == 1) ? 1 : -1;
+                    if (ball.x >= paddle.x && ball.x <= paddle.x + 20) {
                         if (!ball.pHit) {
-                            ball.incY *= -1;
+                            if (ball.incX == 0) ball.incX = (randInt(1,2) == 1) ? 1 : -1;
+                            ball.incY = -1;
+                            ball.incX = -1;
+                            ball.pHit = true;
+                        }
+                    }else if (ball.x >= paddle.x + 20 && ball.x <= paddle.x + 40) {
+                        if (!ball.pHit) {
+                            if (ball.incX == 0) ball.incX = (randInt(1,2) == 1) ? 1 : -1;
+                            ball.incY = -1;
+                            ball.incX = 1;
                             ball.pHit = true;
                         }
                     }
                 }
+
 
             }
             // box draw
