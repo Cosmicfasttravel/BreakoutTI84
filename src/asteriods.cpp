@@ -34,6 +34,19 @@ struct box {
     int c{};
     bool active = false;
 };
+
+enum powerupTypes {
+    MULTIBALL,
+    WIDE_PADDLE,
+    EXTRA_LIFE,
+};
+struct powerups {
+    int x{};
+    int y{};
+    powerupTypes type{};
+    bool active{};
+};
+
 struct paddle paddle;
 struct ball balls[MAX_BALLS];
 box boxes[MAX_BOXES];
@@ -321,7 +334,6 @@ int main() {
         gfx_SetTextTransparentColor(255);
         gfx_SetTextBGColor(255);
         gfx_SwapDraw();
-        //ending issue!!!!
     }
     gfx_End();
 }
