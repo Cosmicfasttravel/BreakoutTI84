@@ -10,7 +10,7 @@
 #define MAX_BOXES 200
 #define BOX_COLS 18
 #define BOX_ROWS 18
-#define MAX_BALLS 10
+#define MAX_BALLS 3
 #define BOX_WIDTH 15
 #define BOX_HEIGHT 10
 #define START_X 30
@@ -78,10 +78,10 @@ void generate_powerup() {
                 spawn_ball(randInt(10,310), 10, 2, -2);
                 break;
             case powerupTypes::WIDE_PADDLE:
-                spawn_ball(randInt(10,310), 0, 2, -2);
+                spawn_ball(randInt(10,310), 10, 2, -2);
                 break;
             case powerupTypes::EXTRA_LIFE:
-                spawn_ball(randInt(10,310), 0, 2, -2);
+                spawn_ball(randInt(10,310), 10, 2, -2);
                 break;
             default:;
         }
@@ -96,7 +96,6 @@ void spawn_powerup(int x, int y, powerupTypes type) {
         powerups.type = type;
         powerups.active = true;
     }
-    generate_powerup();
 }
 
 void generate_connected_level() {
@@ -230,7 +229,7 @@ void pause() {
 void draw_paddle( uint16_t x, uint8_t y) {
     gfx_FillRectangle_NoClip(x, y, 40, 2);
 }
-void box_clear(){
+void clear(){
     for (auto &boxe : boxes) {
         if (!boxe.active) {
             gfx_SetColor(0);
@@ -246,7 +245,25 @@ void box_clear(){
     }
     gfx_FillRectangle(0, 218, 320, 5);
     gfx_FillRectangle(0, 0, 100, 20);
+    for (auto &p : powerup) {
+        if (!p.active) gfx_FillCircle(p.x, p.y, 5);
+        gfx_SetColor(0);
+        gfx_FillCircle(p.x, p.y - 1, 5);
+    }
 }
+
+void update_powerups() {
+    for (auto &p : powerup) {
+        if (!p.active) continue;
+        gfx_SetColor(random_color());
+        gfx_FillCircle(p.x, p.y, 3);
+        p.y += 1;
+        if (p.y >= 235) {
+            p.active = false;
+        }
+    }
+}
+
 int main() {
     char buf[1];
     gfx_Begin();
@@ -283,7 +300,7 @@ int main() {
             isBallSpawned = true;
         }
 
-        box_clear();
+        clear();
         gfx_SetColor(255);
         draw_paddle(paddle.x, paddle.y);
 
@@ -300,6 +317,15 @@ int main() {
             pause();
             break;
         }
+        for (auto &p : powerup) {
+            if (!isBallSpawned) {
+                if (p.active) {
+                    p.active = false;
+                    gfx_SetColor(0);
+                    gfx_FillCircle(p.x, p.y - 1, 5);
+                }
+            }
+        }
         if (isBallSpawned == true) {
             allBallsInactive = true;
             for (auto &ball : balls) {
@@ -311,6 +337,14 @@ int main() {
             if (allBallsInactive == true) {
                 isBallSpawned = false;
                 lives--;
+            }
+            for (auto &p : powerup) {
+                if (p.x >= paddle.x && p.x <= paddle.x + 40 ) {
+                    if (p.y >= paddle.y){
+                        p.active = false;
+                        generate_powerup();
+                    }
+                }
             }
             for (auto & ball : balls) {
                 if (ball.active == false) continue;
@@ -339,13 +373,13 @@ int main() {
             }
             // box draw
             draw_box();
+            update_powerups();
             for (auto &boxe : boxes) {
                 if (!boxe.active) continue;
                 for (auto &ball : balls) {
                     if (!ball.active) continue;
                     if (ball.x >= boxe.x && ball.x <= boxe.x + boxe.w &&
                         ball.y >= boxe.y && ball.y <= boxe.y + boxe.h) {
-                        spawn_powerup(paddle.x, paddle.y, MULTIBALL);
                         int prevX = ball.x - ball.incX;
                         if (prevX < boxe.x || prevX > boxe.x + boxe.w){
                             ball.incX *= -1;
@@ -355,6 +389,7 @@ int main() {
                             ball.pHit = false;
                             ball.incY *= -1;
                         }
+                        spawn_powerup(boxe.x, boxe.y, MULTIBALL);
                         boxe.active = false;
                         }
                 }
