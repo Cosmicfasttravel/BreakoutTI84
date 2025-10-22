@@ -71,20 +71,20 @@ uint16_t random_color() {
 }
 
 void generate_powerup() {
-    for (auto & powerups : powerup) {
-        if (!powerups.active) continue;
-        switch (powerups.type) {
-            case powerupTypes::MULTIBALL:
+    for (auto & p : powerup) {
+        if (p.active) {}
+        switch (p.type) {
+            case MULTIBALL:
                 spawn_ball(randInt(10,310), 10, 2, -2);
                 break;
-            case powerupTypes::WIDE_PADDLE:
-                spawn_ball(randInt(10,310), 10, 2, -2);
+            case EXTRA_LIFE:
+
                 break;
-            case powerupTypes::EXTRA_LIFE:
-                spawn_ball(randInt(10,310), 10, 2, -2);
+            case WIDE_PADDLE:
                 break;
-            default:;
+            default: break;
         }
+        break;
     }
 }
 
@@ -93,8 +93,9 @@ void spawn_powerup(int x, int y, powerupTypes type) {
         if (powerups.active) continue;
         powerups.x = x;
         powerups.y = y;
-        powerups.type = type;
         powerups.active = true;
+        powerups.type = type;
+        break;
     }
 }
 
@@ -255,7 +256,6 @@ void clear(){
 void update_powerups() {
     for (auto &p : powerup) {
         if (!p.active) continue;
-        gfx_SetColor(random_color());
         gfx_FillCircle(p.x, p.y, 3);
         p.y += 1;
         if (p.y >= 235) {
@@ -339,6 +339,7 @@ int main() {
                 lives--;
             }
             for (auto &p : powerup) {
+                if (!p.active) continue;
                 if (p.x >= paddle.x && p.x <= paddle.x + 40 ) {
                     if (p.y >= paddle.y){
                         p.active = false;
