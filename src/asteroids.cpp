@@ -70,22 +70,19 @@ uint16_t random_color() {
         }
 }
 
-void generate_powerup() {
-    for (auto & p : powerup) {
-        if (p.active) {}
-        switch (p.type) {
+void generate_powerup(powerups *p, int *livPtr) {
+        if (p->active) {}
+        switch (p->type) {
             case MULTIBALL:
                 spawn_ball(paddle.x, paddle.y - 20, randInt(1,2) == 1 ? randInt(-2,-1) : randInt(1,2), -2);
                 break;
             case EXTRA_LIFE:
-
+                (*livPtr)++;
                 break;
             case WIDE_PADDLE:
                 break;
-            default: break;
+            default:;
         }
-        break;
-    }
 }
 
 void spawn_powerup(int x, int y, powerupTypes type) {
@@ -343,7 +340,7 @@ int main() {
                 if (p.x >= paddle.x && p.x <= paddle.x + 40 ) {
                     if (p.y >= paddle.y){
                         p.active = false;
-                        generate_powerup();
+                        generate_powerup(&p ,&lives);
                     }
                 }
             }
