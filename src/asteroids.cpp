@@ -1,3 +1,5 @@
+#include "asteroids.h"
+
 #include <ti/getcsc.h>
 #include <ti/sprintf.h>
 #include <graphx.h>
@@ -8,11 +10,12 @@
 #define MAX_BOXES 200
 #define BOX_COLS 18
 #define BOX_ROWS 18
-#define MAX_BALLS 5
+#define MAX_BALLS 10
 #define BOX_WIDTH 15
 #define BOX_HEIGHT 10
 #define START_X 30
 #define START_Y 0
+#define MAX_POWERUPS 5
 struct paddle {
     uint16_t x = 160;
     uint8_t y = 220;
@@ -49,6 +52,7 @@ struct powerups {
 
 struct paddle paddle;
 struct ball balls[MAX_BALLS];
+struct powerups powerup[MAX_POWERUPS];
 box boxes[MAX_BOXES];
 uint16_t random_color() {
     int i = randInt(0,3);
@@ -65,6 +69,36 @@ uint16_t random_color() {
                 return 0;
         }
 }
+
+void generate_powerup() {
+    for (auto & powerups : powerup) {
+        if (!powerups.active) continue;
+        switch (powerups.type) {
+            case powerupTypes::MULTIBALL:
+                spawn_ball(randInt(10,310), 10, 2, -2);
+                break;
+            case powerupTypes::WIDE_PADDLE:
+                spawn_ball(randInt(10,310), 0, 2, -2);
+                break;
+            case powerupTypes::EXTRA_LIFE:
+                spawn_ball(randInt(10,310), 0, 2, -2);
+                break;
+            default:;
+        }
+    }
+}
+
+void spawn_powerup(int x, int y, powerupTypes type) {
+    for (auto & powerups : powerup) {
+        if (powerups.active) continue;
+        powerups.x = x;
+        powerups.y = y;
+        powerups.type = type;
+        powerups.active = true;
+    }
+    generate_powerup();
+}
+
 void generate_connected_level() {
     for (auto & boxe : boxes) {
         boxe.active = false;
@@ -245,12 +279,14 @@ int main() {
         }
         if (kb_Data[7] & kb_Up && isBallSpawned == false) {
             spawn_ball(paddle.x + 10, paddle.y - 10, randInt(1,2) == 2 ? 1 : -1, -2);
+
             isBallSpawned = true;
         }
 
         box_clear();
         gfx_SetColor(255);
         draw_paddle(paddle.x, paddle.y);
+
         // ball draw
         if (lives<=0) {
             gfx_FillScreen(0);
@@ -281,6 +317,7 @@ int main() {
                 update_ball(&ball);
                 draw_ball(&ball);
                 if (ball.y >= paddle.y - 3 - ball.radius && ball.y <= paddle.y - ball.radius) {
+
                     if (ball.x >= paddle.x && ball.x <= paddle.x + 20) {
                         if (!ball.pHit) {
                             if (ball.incX == 0) ball.incX = (randInt(1,2) == 1) ? 1 : -1;
@@ -308,8 +345,8 @@ int main() {
                     if (!ball.active) continue;
                     if (ball.x >= boxe.x && ball.x <= boxe.x + boxe.w &&
                         ball.y >= boxe.y && ball.y <= boxe.y + boxe.h) {
+                        spawn_powerup(paddle.x, paddle.y, MULTIBALL);
                         int prevX = ball.x - ball.incX;
-
                         if (prevX < boxe.x || prevX > boxe.x + boxe.w){
                             ball.incX *= -1;
                             ball.pHit = false;
@@ -318,8 +355,6 @@ int main() {
                             ball.pHit = false;
                             ball.incY *= -1;
                         }
-
-
                         boxe.active = false;
                         }
                 }
