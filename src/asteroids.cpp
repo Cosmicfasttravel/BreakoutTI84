@@ -75,7 +75,7 @@ void generate_powerup() {
         if (p.active) {}
         switch (p.type) {
             case MULTIBALL:
-                spawn_ball(randInt(10,310), 10, 2, -2);
+                spawn_ball(paddle.x, paddle.y - 20, randInt(1,2) == 1 ? randInt(-2,-1) : randInt(1,2), -2);
                 break;
             case EXTRA_LIFE:
 
@@ -117,8 +117,8 @@ void generate_connected_level() {
     int placedCount = 1;
 
     while (placedCount < maxBoxes) {
-        const int dirY[6] = { 0, 0, 1, -1, 2, -2};
-        const int dirX[6] = { 1, -1, 0, 0, 2, -2};
+        constexpr int dirY[6] = { 0, 0, 1, -1, 2, -2};
+        constexpr int dirX[6] = { 1, -1, 0, 0, 2, -2};
         int dir = randInt(0, 5);
         int newRow = curRow + dirY[dir];
         int newCol = curCol + dirX[dir];
@@ -357,14 +357,14 @@ int main() {
                         if (!ball.pHit) {
                             if (ball.incX == 0) ball.incX = (randInt(1,2) == 1) ? 1 : -1;
                             ball.incY = -1;
-                            ball.incX = -1;
+                            ball.incX = -1 * static_cast<int>randInt(1, 2);
                             ball.pHit = true;
                         }
                     }else if (ball.x >= paddle.x + 20 && ball.x <= paddle.x + 40) {
                         if (!ball.pHit) {
                             if (ball.incX == 0) ball.incX = (randInt(1,2) == 1) ? 1 : -1;
                             ball.incY = -1;
-                            ball.incX = 1;
+                            ball.incX = 1 * static_cast<int>randInt(1, 2);
                             ball.pHit = true;
                         }
                     }
