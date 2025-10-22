@@ -1,1 +1,5 @@
 .idea/
+*.o
+*.bin
+*.8xp
+build/
