@@ -2,7 +2,7 @@
 # Program Options
 # ----------------------------
 
-NAME = Asteriod
+NAME = Asteroid
 ICON = obj/icon.png
 DESCRIPTION  = "a very fun game"
 COMPRESSED = NO
