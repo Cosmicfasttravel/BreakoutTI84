@@ -2,7 +2,7 @@
 # Program Options
 # ----------------------------
 
-NAME = Asteroid
+NAME = Breakout
 ICON = obj/icon.png
 DESCRIPTION  = "a very fun game"
 COMPRESSED = NO
