@@ -1,8 +1,8 @@
 ### What this is
-This is a fun calculator work in progress game, check out the wiki for installation tips and make sure to download the latest release for the latest bug fixes.
+This is a fun, work-in-progress calculator game. Check out the wiki for installation tips and ensure you download the latest release for the most up-to-date bug fixes.
 ## 
 ### Gameplay:
 <img width="320" height="240" alt="apng" src="https://github.com/user-attachments/assets/11c0d24d-3006-440f-9097-bb6da1691b40" />
 
 ### Raw installation guide
-To install and compile the game on your calculator, you need to install the CE C/C++ toolchain from https://github.com/CE-Programming/toolchain after that 
+To install and compile the game on your calculator, you need to install the CE C/C++ toolchain from https://github.com/CE-Programming/toolchain after that you must put the files inside of another folder named whatever and then use the cedev.bat file and run the command `cd YOUR_FOLDER` into the terminal and then type `make`, using the file created in bin, you can now transfer that file onto your calculator/emulator, and edit the files as you wish. 
