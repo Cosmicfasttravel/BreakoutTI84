@@ -19,6 +19,7 @@
 struct paddle {
     uint16_t x = 160;
     uint8_t y = 220;
+    uint8_t w = 40;
 };
 struct ball {
     uint16_t x{};
@@ -80,6 +81,7 @@ void generate_powerup(powerups *p, int *livPtr) {
                 (*livPtr)++;
                 break;
             case WIDE_PADDLE:
+                paddle.w+=10;
                 break;
             default:;
         }
@@ -224,8 +226,8 @@ void draw_ball(const ball *ball) {
 void pause() {
     while (!os_GetCSC()) {}
 }
-void draw_paddle( uint16_t x, uint8_t y) {
-    gfx_FillRectangle_NoClip(x, y, 40, 2);
+void draw_paddle(uint16_t x, uint8_t y) {
+    gfx_FillRectangle_NoClip(x, y, paddle.w, 2);
 }
 void clear(){
     for (auto &boxe : boxes) {
@@ -347,7 +349,7 @@ int main() {
             //powerup collecting
             for (auto &p : powerup) {
                 if (!p.active) continue;
-                if (p.x >= paddle.x && p.x <= paddle.x + 40 ) {
+                if (p.x >= paddle.x && p.x <= paddle.x + paddle.w ) {
                     if (p.y >= paddle.y){
                         p.active = false;
                         generate_powerup(&p ,&lives);
@@ -362,14 +364,14 @@ int main() {
                 draw_ball(&ball);
                 if (ball.y >= paddle.y - 3 - ball.radius && ball.y <= paddle.y - ball.radius) {
 
-                    if (ball.x >= paddle.x && ball.x <= paddle.x + 20) {
+                    if (ball.x >= paddle.x && ball.x <= paddle.x + 0.5*paddle.w) {
                         if (!ball.pHit) {
                             if (ball.incX == 0) ball.incX = (randInt(1,2) == 1) ? 1 : -1;
                             ball.incY = -1;
                             ball.incX = -1 * static_cast<int>randInt(1, 2);
                             ball.pHit = true;
                         }
-                    }else if (ball.x >= paddle.x + 20 && ball.x <= paddle.x + 40) {
+                    }else if (ball.x >= paddle.x + 0.5*paddle.w && ball.x <= paddle.x + paddle.w) {
                         if (!ball.pHit) {
                             if (ball.incX == 0) ball.incX = (randInt(1,2) == 1) ? 1 : -1;
                             ball.incY = -1;
@@ -398,20 +400,20 @@ int main() {
                             ball.pHit = false;
                             ball.incY *= -1;
                         }
-                        powerupTypes powerup = {};
-                        switch (randInt(1,100)) {
+
+                        switch (randInt(1,5)) {
                             case 1:
-                                powerup = MULTIBALL;
+                                spawn_powerup(boxe.x, boxe.y, MULTIBALL);
                                 break;
                             case 2:
-                                powerup = EXTRA_LIFE;
+                                spawn_powerup(boxe.x, boxe.y, EXTRA_LIFE);
                                 break;
                             case 3:
-                                powerup = WIDE_PADDLE;
+                                spawn_powerup(boxe.x, boxe.y, WIDE_PADDLE);
                                 break;
                             default:;
                         }
-                        spawn_powerup(boxe.x, boxe.y, powerup);
+
                         boxe.active = false;
                         }
                 }
