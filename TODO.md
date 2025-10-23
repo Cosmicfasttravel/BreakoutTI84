@@ -18,3 +18,7 @@
 ## Completed
 - [x] Power-ups working
 - [x] Multi-file organization
+- [x] Base game
+- [x] Color randomization
+- [x] Ball movement
+- [x] And more...
