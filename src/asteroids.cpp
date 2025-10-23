@@ -153,7 +153,7 @@ int main() {
                             ball.incY *= -1;
                         }
 
-                        switch (randInt(1,5)) {
+                        switch (randInt(1,30)) {
                             case 1:
                                 spawn_powerup(boxe.x, boxe.y, MULTIBALL);
                                 break;
