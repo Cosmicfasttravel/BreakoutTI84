@@ -1,8 +1,6 @@
 ﻿#ifndef LEVELS_H
 #define LEVELS_H
 
-#include <cstdint>
-#include <graphx.h>
 #include <sys/util.h>
 #include "global.h"
 

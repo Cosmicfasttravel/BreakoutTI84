@@ -11,7 +11,7 @@
 #define MAX_BOXES 200
 #define MAX_BALLS 3
 
-#include <cstdint>
+#include <graphx.h>
 //enum
 enum powerupTypes {
     MULTIBALL,
@@ -54,6 +54,8 @@ extern struct ball balls[MAX_BALLS];
 extern struct powerups powerup[MAX_POWERUPS];
 extern struct box boxes[MAX_BOXES];
 
+//vars
+extern int lives;
 //global functions
 uint16_t random_color();
 void spawn_ball(int x, int y, int ix, int iy);

@@ -1,15 +1,9 @@
 ﻿#ifndef ENTITIES_H
 #define ENTITIES_H
 
-#include <cstdint>
-#include <graphx.h>
-#include <sys/util.h>
 #include "global.h"
 
-
 //functions
-
-
 void spawn_box(int x, int y, int w, int h);
 
 void draw_box();

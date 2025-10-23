@@ -10,22 +10,18 @@
 #include <sys/rtc.h>
 #include <sys/util.h>
 
+#include "ui.h"
 
-void pause() {
-    while (!os_GetCSC()) {}
-}
 int main() {
     //initialize
-    char buf[1];
     gfx_Begin();
     srand(rtc_Time());
     gfx_SetDrawBuffer();
     gfx_FillScreen(0);
     gfx_SwapDraw();
     gfx_FillScreen(0);
-
+    lives = 3;
     //box spawn loop
-    int lives = 3;
     generate_connected_level();
 
     gfx_SetColor(255);
@@ -71,7 +67,7 @@ int main() {
             gfx_SetTextTransparentColor(255);
             gfx_SetTextBGColor(255);
             gfx_SwapDraw();
-            pause();
+            while (!os_GetCSC()) {}
             break;
         }
 
@@ -175,16 +171,8 @@ int main() {
                 }
             }
         }
-        //lives text (should function it)
-        gfx_SetTextTransparentColor(0);
-        gfx_SetTextBGColor(0);
-        gfx_SetTextFGColor(0xFF);
-        boot_sprintf(buf, "%d", lives);
-        gfx_PrintStringXY("Lives: ", 5, 10);
-        gfx_PrintStringXY(buf, 50, 10);
-        gfx_SetTextTransparentColor(255);
-        gfx_SetTextBGColor(255);
-        gfx_SwapDraw();
+        lives_text();
+
     }
     gfx_End();
 }
