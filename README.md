@@ -3,7 +3,7 @@ This is a fun, work-in-progress calculator game. Check out the wiki for installa
 ## 
 ### Gameplay:
 - Note that this is not the final version, and it is subject to change.
-- Also note that many elements, such as powerup spawning, are increased to show what they do; they will be decreased
+- Also note that many elements, such as powerup spawning, are increased to show what they do; they will be decreased in the next releases
 <img width="320" height="240" alt="apng" src="https://github.com/user-attachments/assets/11c0d24d-3006-440f-9097-bb6da1691b40" />
 
 ### Installation guide (will be moved to releases)
