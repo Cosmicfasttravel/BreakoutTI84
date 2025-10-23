@@ -12,6 +12,9 @@
 
 #include "ui.h"
 
+void pause() {
+    while (!os_GetCSC()) {}
+}
 int main() {
     //initialize
     gfx_Begin();
@@ -67,7 +70,7 @@ int main() {
             gfx_SetTextTransparentColor(255);
             gfx_SetTextBGColor(255);
             gfx_SwapDraw();
-            while (!os_GetCSC()) {}
+            gfx_End();
             break;
         }
 
@@ -174,5 +177,5 @@ int main() {
         lives_text();
 
     }
-    gfx_End();
+
 }

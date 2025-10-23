@@ -3,7 +3,7 @@
 #include <ti/sprintf.h>
 
 void lives_text() {
-    char buf[1];
+    char buf[3];
     gfx_SetTextTransparentColor(0);
     gfx_SetTextBGColor(0);
     gfx_SetTextFGColor(0xFF);
