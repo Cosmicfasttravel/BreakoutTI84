@@ -262,6 +262,7 @@ void update_powerups() {
 }
 
 int main() {
+    //initialize
     char buf[1];
     gfx_Begin();
     srand(rtc_Time());
@@ -278,6 +279,7 @@ int main() {
     bool allBallsInactive = false;
     bool isBallSpawned = false;
     while(true) {
+        //key checks
         kb_Scan();
         if (kb_Data[7] & kb_Left) {
             paddle.x -= 4;
@@ -296,12 +298,12 @@ int main() {
 
             isBallSpawned = true;
         }
-
+        //normal clears
         clear();
         gfx_SetColor(255);
         draw_paddle(paddle.x, paddle.y);
 
-        // ball draw
+        //game over
         if (lives<=0) {
             gfx_FillScreen(0);
             gfx_SetTextTransparentColor(0);
@@ -314,6 +316,8 @@ int main() {
             pause();
             break;
         }
+
+        //I actually don't know :(
         for (auto &p : powerup) {
             if (!isBallSpawned) {
                 if (p.active) {
@@ -323,6 +327,8 @@ int main() {
                 }
             }
         }
+
+        //make sure there are still balls before pausing
         if (isBallSpawned == true) {
             allBallsInactive = true;
             for (auto &ball : balls) {
@@ -331,10 +337,14 @@ int main() {
                     break; // stop early — found one active
                 }
             }
+
+            //live decrement
             if (allBallsInactive == true) {
                 isBallSpawned = false;
                 lives--;
             }
+
+            //powerup collecting
             for (auto &p : powerup) {
                 if (!p.active) continue;
                 if (p.x >= paddle.x && p.x <= paddle.x + 40 ) {
@@ -344,6 +354,8 @@ int main() {
                     }
                 }
             }
+
+            //ball paddle collisions
             for (auto & ball : balls) {
                 if (ball.active == false) continue;
                 update_ball(&ball);
@@ -366,9 +378,8 @@ int main() {
                         }
                     }
                 }
-
-
             }
+
             // box draw
             draw_box();
             update_powerups();
@@ -387,12 +398,26 @@ int main() {
                             ball.pHit = false;
                             ball.incY *= -1;
                         }
-                        spawn_powerup(boxe.x, boxe.y, MULTIBALL);
+                        powerupTypes powerup = {};
+                        switch (randInt(1,100)) {
+                            case 1:
+                                powerup = MULTIBALL;
+                                break;
+                            case 2:
+                                powerup = EXTRA_LIFE;
+                                break;
+                            case 3:
+                                powerup = WIDE_PADDLE;
+                                break;
+                            default:;
+                        }
+                        spawn_powerup(boxe.x, boxe.y, powerup);
                         boxe.active = false;
                         }
                 }
             }
         }
+        //lives text (should function it)
         gfx_SetTextTransparentColor(0);
         gfx_SetTextBGColor(0);
         gfx_SetTextFGColor(0xFF);
