@@ -4,7 +4,8 @@ This is a fun, work-in-progress calculator game. Ensure you download the latest 
 ### Gameplay:
 - Note that this is not the final version, and it is subject to change.
 - Also note that many elements, such as powerup spawning, are increased to show what they do; they will be decreased in the next releases
-<img width="320" height="240" alt="apng" src="https://github.com/user-attachments/assets/11c0d24d-3006-440f-9097-bb6da1691b40" />
+<img width="320" height="240" alt="apng" src="https://github.com/user-attachments/assets/67f8dae7-6834-4832-b51e-a84aee5c917d" />
+
 
 ### Installation guide (will be moved to releases)
 To install the program onto the calculator, you need to install the C libraries from https://github.com/CE-Programming/libraries, then you download the latest release from the release page, and install the .8xp file onto your calculator through the TI-Connect CE software. Note: it must be run through a shell, or it will not work. Use artifice for the shell; it is very effective
