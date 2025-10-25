@@ -18,13 +18,13 @@ void pause() {
 }
 int game() {
     //initialize
+    srand(rtc_Time());
     int currentLevel = 0;
     gfx_Begin();
     if (!main_menu()) {
         gfx_End();
         return 0;
     }
-    srand(rtc_Time());
     gfx_SetDrawBuffer();
     gfx_FillScreen(0);
     gfx_SwapDraw();
@@ -32,7 +32,7 @@ int game() {
     lives = 3;
     //box spawn loop
     if (level == 0) {
-        generate_connected_level();
+        generate_connected_level(1);
         currentLevel = 0;
     }else if (level == 1) {
         load_level(level1);
@@ -40,8 +40,9 @@ int game() {
     }else {
 
     }
-
-
+    draw_box();
+    gfx_SwapDraw();
+    draw_box();
     gfx_SetColor(255);
     bool allBallsInactive = false;
     bool isBallSpawned = false;
@@ -61,21 +62,14 @@ int game() {
             if (paddle.x > 316-paddle.w) {
                 paddle.x = 316-paddle.w;
             }
+
         }
         if (kb_Data[7] & kb_Up && isBallSpawned == false) {
             spawn_ball(paddle.x + 10, paddle.y - 10, randInt(1,2) == 2 ? 1 : -1, -2);
-
             isBallSpawned = true;
+
+
         }
-
-        //normal clears
-        clear_box();
-        clear_ball();
-        clear_misc();
-        clear_powerups();
-
-        gfx_SetColor(255);
-        draw_paddle(paddle.x, paddle.y);
 
         //game over
         if (lives<=0) {
@@ -102,8 +96,23 @@ int game() {
             }
         }
 
+
+        if (!isBallSpawned) {
+            gfx_SetColor(0);
+            clear_misc();
+            gfx_SetColor(255);
+            draw_paddle(paddle.x, paddle.y);
+        }
         //make sure there are still balls before pausing
-        if (isBallSpawned == true) {
+        if (isBallSpawned) {
+            clear_box();
+            clear_ball();
+            clear_misc();
+            clear_powerups();
+
+            gfx_SetColor(255);
+            draw_paddle(paddle.x, paddle.y);
+
             allBallsInactive = true;
             for (auto &ball : balls) {
                 if (ball.active) {
@@ -206,7 +215,8 @@ int game() {
                                 break;
                             default:;
                         }
-
+                        gfx_SetColor(0);
+                        gfx_FillRectangle_NoClip(boxe.x, boxe.y, boxe.w, boxe.h);
                         boxe.active = false;
                         }
                 }
@@ -215,6 +225,7 @@ int game() {
         lives_text();
 
     }
+    return 0;
 }
 int main() {
     game();

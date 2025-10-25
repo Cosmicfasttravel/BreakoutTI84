@@ -4,7 +4,7 @@
 #define START_X 0
 #define START_Y 0
 #define MAX_POWERUPS 5
-#define BOX_COLS 22
+#define BOX_COLS 21
 #define BOX_ROWS 18
 #define BOX_WIDTH 15
 #define BOX_HEIGHT 10
@@ -12,6 +12,7 @@
 #define MAX_BALLS 3
 
 #include <graphx.h>
+#include <cstdint>
 //enum
 enum powerupTypes {
     MULTIBALL,
@@ -46,6 +47,7 @@ struct box {
     int h{};
     int c{};
     bool active = false;
+    bool cleared = false;
 };
 
 //struct vars

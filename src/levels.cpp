@@ -21,56 +21,82 @@ uint16_t random_color() {
     }
 }
 //very big random level creating through multidimensional array
-void generate_connected_level() {
-    for (auto & boxe : boxes) {
-        boxe.active = false;
-    }
-    uint16_t maxBoxes = 20 + randInt(0,49);
-    uint16_t startRow = 5 + randInt(0,9);
-    uint16_t startCol = 5 + randInt(0,9);
+void generate_connected_level(int create) {
 
-    //map
-    bool placed[BOX_ROWS][BOX_COLS] = {{false}};
-
-    // start from one box
-    int curRow = startRow;
-    int curCol = startCol;
-    placed[curRow][curCol] = true;
-    int placedCount = 1;
-
-    while (placedCount < maxBoxes) {
-        constexpr int dirY[6] = { 0, 0, 1, -1, 2, -2};
-        constexpr int dirX[6] = { 1, -1, 0, 0, 2, -2};
-        int dir = randInt(0, 5);
-        int newRow = curRow + dirY[dir];
-        int newCol = curCol + dirX[dir];
-
-        // keep within grid
-        if (newRow >= 0 && newRow < BOX_ROWS && newCol >= 0 && newCol < BOX_COLS) {
-            if (!placed[newRow][newCol]) {
-                placed[newRow][newCol] = true;
-                placedCount++;
+    static bool placed[BOX_ROWS][BOX_COLS];
+    if (create == 0) {
+        for (auto & row : placed) {
+            for (bool & col : row) {
+                col = false;
             }
-            curRow = newRow;
-            curCol = newCol;
+        }
+        for (auto & boxe : boxes) {
+            boxe.active = false;
+        }
+        uint16_t maxBoxes = 20 + randInt(0,49);
+        uint16_t startRow = 5 + randInt(0,9);
+        uint16_t startCol = 5 + randInt(0,9);
+
+        //map
+        placed[BOX_ROWS][BOX_COLS] = {{false}};
+
+        // start from one box
+        int curRow = startRow;
+        int curCol = startCol;
+        placed[curRow][curCol] = true;
+        int placedCount = 1;
+
+        while (placedCount < maxBoxes) {
+            constexpr int dirY[6] = { 0, 0, 1, -1, 2, -2};
+            constexpr int dirX[6] = { 1, -1, 0, 0, 2, -2};
+            int dir = randInt(0, 5);
+            int newRow = curRow + dirY[dir];
+            int newCol = curCol + dirX[dir];
+
+            // keep within grid
+            if (newRow >= 0 && newRow < BOX_ROWS && newCol >= 0 && newCol < BOX_COLS) {
+                if (!placed[newRow][newCol]) {
+                    placed[newRow][newCol] = true;
+                    placedCount++;
+                }
+                curRow = newRow;
+                curCol = newCol;
+            }
+        }
+
+        // convert placed map into box coordinates
+        int boxIndex = 0;
+        for (int row = 0; row < BOX_ROWS; row++) {
+            for (int col = 0; col < BOX_COLS; col++) {
+                if (placed[row][col]) {
+                    boxes[boxIndex].x = START_X + col * BOX_WIDTH;
+                    boxes[boxIndex].y = START_Y + row * BOX_HEIGHT;
+                    boxes[boxIndex].w = BOX_WIDTH;
+                    boxes[boxIndex].h = BOX_HEIGHT;
+                    boxes[boxIndex].active = true;
+                    boxes[boxIndex].c = random_color();
+                    boxIndex++;
+                }
+            }
+        }
+    }
+    else if (create == 1) {
+        int boxIndex = 0;
+        for (int row = 0; row < BOX_ROWS; row++) {
+            for (int col = 0; col < BOX_COLS; col++) {
+                if (placed[row][col]) {
+                    boxes[boxIndex].x = START_X + col * BOX_WIDTH;
+                    boxes[boxIndex].y = START_Y + row * BOX_HEIGHT;
+                    boxes[boxIndex].w = BOX_WIDTH;
+                    boxes[boxIndex].h = BOX_HEIGHT;
+                    boxes[boxIndex].active = true;
+                    boxes[boxIndex].c = random_color();
+                    boxIndex++;
+                }
+            }
         }
     }
 
-    // convert placed map into box coordinates
-    int boxIndex = 0;
-    for (int row = 0; row < BOX_ROWS; row++) {
-        for (int col = 0; col < BOX_COLS; col++) {
-            if (placed[row][col]) {
-                boxes[boxIndex].x = START_X + col * BOX_WIDTH;
-                boxes[boxIndex].y = START_Y + row * BOX_HEIGHT;
-                boxes[boxIndex].w = BOX_WIDTH;
-                boxes[boxIndex].h = BOX_HEIGHT;
-                boxes[boxIndex].active = true;
-                boxes[boxIndex].c = random_color();
-                boxIndex++;
-            }
-        }
-    }
 }
 
 void load_level(const int levelData[BOX_ROWS][BOX_COLS]) {

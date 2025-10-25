@@ -98,7 +98,7 @@ void clear_box() {
 void clear_ball() {
     for (auto &ball : balls) {
         gfx_SetColor(0);
-        if (!ball.active) gfx_FillCircle(ball.x, ball.y, ball.radius + 10);;
+        if (!ball.active) gfx_FillCircle(ball.x, ball.y, ball.radius + 10);
         gfx_FillCircle(ball.x, ball.y, ball.radius + 10);
     }
 }

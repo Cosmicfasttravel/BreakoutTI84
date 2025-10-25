@@ -34,4 +34,5 @@ void preview_level(int level);
 extern int level1[BOX_ROWS][BOX_COLS];
 extern int level2[BOX_ROWS][BOX_COLS];
 extern int level3[BOX_ROWS][BOX_COLS];
+
 #endif //MENU_H

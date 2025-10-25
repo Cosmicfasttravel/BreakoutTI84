@@ -36,7 +36,6 @@ int level3[BOX_ROWS][BOX_COLS] = {
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 };
-
 int main_menu() {
     menuOption = MENU_START;
         while (true) {
@@ -154,7 +153,7 @@ int levels_menu() {
                 if (levelOption != LPREVIEW) {
                     level = static_cast<int>(levelOption);
                 }
-                if (levelOption == LPREVIEW) {
+                else if (levelOption == LPREVIEW) {
                     preview_level(level);
                 }
                 break;
@@ -167,8 +166,13 @@ int levels_menu() {
 }
 
 void preview_level(int level) {
+
     gfx_SetTransparentColor(0);
     gfx_FillScreen(0);
+    if (level == 0) {
+        generate_connected_level(0);
+        draw_box();
+    }
     if (level == 1) {
         load_level(level1);
         draw_box();
