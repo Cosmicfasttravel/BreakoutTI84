@@ -2,9 +2,9 @@
 #define MENU_H
 #include <ti/getcsc.h>
 enum MenuOption {
-    MENU_NONE = 0,
-    MENU_EXIT,
     MENU_START,
+    MENU_EXIT,
+
 };
 
 static enum MenuOption menuOption;
