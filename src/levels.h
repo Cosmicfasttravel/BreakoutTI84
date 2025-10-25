@@ -5,5 +5,7 @@
 #include "global.h"
 
 void generate_connected_level();
+void load_level(const int levelData[BOX_ROWS][BOX_COLS]);
+
 
 #endif //LEVELS_H

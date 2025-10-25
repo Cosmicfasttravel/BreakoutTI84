@@ -16,9 +16,9 @@
 void pause() {
     while (!os_GetCSC()) {}
 }
-
-int main() {
+int game() {
     //initialize
+    int currentLevel = 0;
     gfx_Begin();
     if (!main_menu()) {
         gfx_End();
@@ -31,11 +31,22 @@ int main() {
     gfx_FillScreen(0);
     lives = 3;
     //box spawn loop
-    generate_connected_level();
+    if (level == 0) {
+        generate_connected_level();
+        currentLevel = 0;
+    }else if (level == 1) {
+        load_level(level1);
+        currentLevel = 1;
+    }else {
+
+    }
+
 
     gfx_SetColor(255);
     bool allBallsInactive = false;
     bool isBallSpawned = false;
+    bool allBoxesInactive = false;
+
     while(true) {
         //key checks
         kb_Scan();
@@ -99,6 +110,27 @@ int main() {
                     allBallsInactive = false;
                     break; // stop early — found one active
                 }
+            }
+            allBoxesInactive = true;
+            for (auto &boxes : boxes) {
+                if (boxes.active) {
+                    allBoxesInactive = false;
+                    break; // stop early — found one active
+                }
+            }
+            if (allBoxesInactive) {
+                if (currentLevel == 1) {
+                    load_level(level2);
+                    currentLevel = 2;
+                }
+                else if (currentLevel == 2) {
+                    load_level(level3);
+                    currentLevel = 3;
+                }
+                if (currentLevel == 0) {
+                    game();
+                }
+
             }
 
             //live decrement
@@ -183,5 +215,7 @@ int main() {
         lives_text();
 
     }
-
+}
+int main() {
+    game();
 }

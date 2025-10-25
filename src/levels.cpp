@@ -1,4 +1,9 @@
 ﻿#include "levels.h"
+
+
+
+
+
 //color (cool)
 uint16_t random_color() {
     int i = randInt(0,3);
@@ -56,6 +61,29 @@ void generate_connected_level() {
     for (int row = 0; row < BOX_ROWS; row++) {
         for (int col = 0; col < BOX_COLS; col++) {
             if (placed[row][col]) {
+                boxes[boxIndex].x = START_X + col * BOX_WIDTH;
+                boxes[boxIndex].y = START_Y + row * BOX_HEIGHT;
+                boxes[boxIndex].w = BOX_WIDTH;
+                boxes[boxIndex].h = BOX_HEIGHT;
+                boxes[boxIndex].active = true;
+                boxes[boxIndex].c = random_color();
+                boxIndex++;
+            }
+        }
+    }
+}
+
+void load_level(const int levelData[BOX_ROWS][BOX_COLS]) {
+    // Clear all boxes first
+    for (auto & boxe : boxes) {
+        boxe.active = false;
+    }
+
+    // Read the level array and create boxes
+    int boxIndex = 0;
+    for (int row = 0; row < BOX_ROWS; row++) {
+        for (int col = 0; col < BOX_COLS; col++) {
+            if (levelData[row][col] == 1) {  // If there's a box here
                 boxes[boxIndex].x = START_X + col * BOX_WIDTH;
                 boxes[boxIndex].y = START_Y + row * BOX_HEIGHT;
                 boxes[boxIndex].w = BOX_WIDTH;

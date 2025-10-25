@@ -1,10 +1,10 @@
 ﻿#ifndef GLOBAL_H
 #define GLOBAL_H
 
-#define START_X 30
+#define START_X 0
 #define START_Y 0
 #define MAX_POWERUPS 5
-#define BOX_COLS 18
+#define BOX_COLS 22
 #define BOX_ROWS 18
 #define BOX_WIDTH 15
 #define BOX_HEIGHT 10
@@ -56,6 +56,7 @@ extern struct box boxes[MAX_BOXES];
 
 //vars
 extern int lives;
+extern int level;
 //global functions
 uint16_t random_color();
 void spawn_ball(int x, int y, int ix, int iy);

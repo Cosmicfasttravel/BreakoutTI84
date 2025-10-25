@@ -6,3 +6,4 @@ struct box boxes[MAX_BOXES];
 
 //vars
 int lives;
+int level;
