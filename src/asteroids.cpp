@@ -10,14 +10,20 @@
 #include <sys/rtc.h>
 #include <sys/util.h>
 
+#include "menu.h"
 #include "ui.h"
 
 void pause() {
     while (!os_GetCSC()) {}
 }
+
 int main() {
     //initialize
     gfx_Begin();
+    if (!main_menu()) {
+        gfx_End();
+        return 0;
+    }
     srand(rtc_Time());
     gfx_SetDrawBuffer();
     gfx_FillScreen(0);
@@ -122,14 +128,14 @@ int main() {
                     if (ball.x >= paddle.x && ball.x <= paddle.x + 0.5*paddle.w) {
                         if (!ball.pHit) {
                             if (ball.incX == 0) ball.incX = (randInt(1,2) == 1) ? 1 : -1;
-                            ball.incY = -1;
+                            ball.incY = -1 * static_cast<int>randInt(1, 2);
                             ball.incX = -1 * static_cast<int>randInt(1, 2);
                             ball.pHit = true;
                         }
                     }else if (ball.x >= paddle.x + 0.5*paddle.w && ball.x <= paddle.x + paddle.w) {
                         if (!ball.pHit) {
                             if (ball.incX == 0) ball.incX = (randInt(1,2) == 1) ? 1 : -1;
-                            ball.incY = -1;
+                            ball.incY = -1 * static_cast<int>randInt(1, 2);
                             ball.incX = 1 * static_cast<int>randInt(1, 2);
                             ball.pHit = true;
                         }
