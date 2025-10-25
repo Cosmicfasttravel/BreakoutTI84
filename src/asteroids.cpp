@@ -17,11 +17,12 @@ void pause() {
     while (!os_GetCSC()) {}
 }
 int game() {
+    static renderingMode renderMode = {};
     //initialize
     srand(rtc_Time());
     int currentLevel = 0;
     gfx_Begin();
-    if (!main_menu()) {
+    if (!main_menu(&renderMode)) {
         gfx_End();
         return 0;
     }
@@ -67,8 +68,6 @@ int game() {
         if (kb_Data[7] & kb_Up && isBallSpawned == false) {
             spawn_ball(paddle.x + 10, paddle.y - 10, randInt(1,2) == 2 ? 1 : -1, -2);
             isBallSpawned = true;
-
-
         }
 
         //game over
@@ -105,11 +104,16 @@ int game() {
         }
         //make sure there are still balls before pausing
         if (isBallSpawned) {
-            clear_box();
+            gfx_SetColor(0);
+            if (renderMode == SLOW) {
+                clear_box();
+            }
             clear_ball();
             clear_misc();
             clear_powerups();
-
+            for (auto &boxes : boxes) {
+                if (!boxes.active) {gfx_FillRectangle_NoClip(boxes.x, boxes.y, boxes.w, boxes.h);}
+            }
             gfx_SetColor(255);
             draw_paddle(paddle.x, paddle.y);
 
@@ -165,7 +169,6 @@ int game() {
                 update_ball(&ball);
                 draw_ball(&ball);
                 if (ball.y >= paddle.y - 3 - ball.radius && ball.y <= paddle.y - ball.radius) {
-
                     if (ball.x >= paddle.x && ball.x <= paddle.x + 0.5*paddle.w) {
                         if (!ball.pHit) {
                             if (ball.incX == 0) ball.incX = (randInt(1,2) == 1) ? 1 : -1;
@@ -185,7 +188,9 @@ int game() {
             }
 
             // box draw
-            draw_box();
+            if (renderMode == SLOW) {
+                draw_box();
+            }
             update_powerups();
             for (auto &boxe : boxes) {
                 if (!boxe.active) continue;
@@ -215,15 +220,16 @@ int game() {
                                 break;
                             default:;
                         }
-                        gfx_SetColor(0);
-                        gfx_FillRectangle_NoClip(boxe.x, boxe.y, boxe.w, boxe.h);
+                        if (renderMode == FAST) {
+                            gfx_SetColor(0);
+                            gfx_FillRectangle_NoClip(boxe.x, boxe.y, boxe.w, boxe.h);
+                        }
                         boxe.active = false;
                         }
                 }
             }
         }
         lives_text();
-
     }
     return 0;
 }

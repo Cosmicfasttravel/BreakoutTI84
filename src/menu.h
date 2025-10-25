@@ -26,8 +26,8 @@ enum LevelOptions {
 static enum MenuOption menuOption;
 static enum Options options;
 static enum LevelOptions levelOption;
-int main_menu();
-int options_menu();
+int main_menu(renderingMode *mode);
+int options_menu(renderingMode *mode);
 int levels_menu();
 void preview_level(int level);
 

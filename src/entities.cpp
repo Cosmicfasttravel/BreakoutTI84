@@ -5,7 +5,7 @@ void spawn_ball(int x, int y, int ix, int iy) {
         if (!ball.active) {
             ball.x = x;
             ball.y = y;
-            ball.radius = 3;
+            ball.radius = 5;
             ball.incX = ix;
             ball.incY = iy;
             ball.active = true;
@@ -32,33 +32,34 @@ void spawn_box(int x, int y, int w, int h) {
 void update_ball(ball *ball) {
     if (!ball->active) return;
 
+    // Save previous position
+    ball->prevX = ball->x;
+    ball->prevY = ball->y;
+
+    // Update position
     ball->x += ball->incX;
     ball->y += ball->incY;
 
-    // Left wall
+    // Collision with walls
     if (ball->x - ball->radius < 0) {
         ball->x = ball->radius;
         ball->incX *= -1;
         ball->pHit = false;
     }
-
-    // Right wall
     if (ball->x + ball->radius > 319) {
         ball->x = 319 - ball->radius;
         ball->incX *= -1;
         ball->pHit = false;
     }
-
-    // Top wall
     if (ball->y - ball->radius < 0) {
         ball->y = ball->radius;
         ball->incY *= -1;
         ball->pHit = false;
     }
-
-    // Bottom wall
     if (ball->y + ball->radius > 239) {
-        ball->active = false;
+        ball->active = false; // Ball lost
+
+
     }
 }
 
@@ -80,7 +81,7 @@ void draw_paddle(uint16_t x, uint8_t y) {
 
 void draw_ball(const ball *ball) {
     if (!ball->active) return;
-    gfx_FillCircle(ball->x, ball->y, ball->radius);
+    gfx_FillRectangle(ball->x, ball->y, ball->radius, ball->radius);
 }
 
 //clearing
@@ -97,13 +98,18 @@ void clear_box() {
 //ball clear
 void clear_ball() {
     for (auto &ball : balls) {
-        gfx_SetColor(0);
-        if (!ball.active) gfx_FillCircle(ball.x, ball.y, ball.radius + 10);
-        gfx_FillCircle(ball.x, ball.y, ball.radius + 10);
+        if (ball.active) {
+            gfx_SetColor(0);
+            gfx_FillRectangle(ball.prevX, ball.prevY, ball.radius, ball.radius);
+        }else if (!ball.active) {
+            gfx_FillRectangle(ball.prevX, ball.prevY, ball.radius, ball.radius);
+            gfx_FillRectangle(ball.x, ball.x, ball.radius, ball.radius);
+        }
     }
 }
 //extra clears
 void clear_misc() {
+    gfx_SetColor(0);
     gfx_FillRectangle(0, 218, 320, 5);
-    gfx_FillRectangle(0, 0, 100, 20);
+    gfx_FillRectangle(0, 220, 100, 20);
 }

@@ -3,7 +3,7 @@ struct paddle paddle;
 struct ball balls[MAX_BALLS];
 struct powerups powerup[MAX_POWERUPS];
 struct box boxes[MAX_BOXES];
-
+enum renderingMode mode;
 //vars
 int lives;
 int level;

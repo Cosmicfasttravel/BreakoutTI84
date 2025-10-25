@@ -1,10 +1,10 @@
 ﻿#ifndef GLOBAL_H
 #define GLOBAL_H
 
-#define START_X 0
-#define START_Y 0
+#define START_X 15
+#define START_Y 10
 #define MAX_POWERUPS 5
-#define BOX_COLS 21
+#define BOX_COLS 20
 #define BOX_ROWS 18
 #define BOX_WIDTH 15
 #define BOX_HEIGHT 10
@@ -18,6 +18,10 @@ enum powerupTypes {
     MULTIBALL,
     WIDE_PADDLE,
     EXTRA_LIFE,
+};
+enum renderingMode {
+    SLOW = 1,
+    FAST = 0,
 };
 //structs
 struct powerups {
@@ -35,6 +39,7 @@ struct ball {
     uint16_t x{};
     uint8_t y{};
     uint8_t radius{};
+    int prevX, prevY;
     int incX{};
     int incY{};
     bool active{};
@@ -50,12 +55,13 @@ struct box {
     bool cleared = false;
 };
 
+
 //struct vars
 extern struct paddle paddle;
 extern struct ball balls[MAX_BALLS];
 extern struct powerups powerup[MAX_POWERUPS];
 extern struct box boxes[MAX_BOXES];
-
+extern enum renderingMode mode;
 //vars
 extern int lives;
 extern int level;
