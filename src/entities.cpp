@@ -103,11 +103,9 @@ void clear_ball() {
     gfx_SetColor(0);
     for (auto &ball : balls) {
         if (ball.active) {
-            // Clear slightly larger area to prevent trails
             int clearSize = ball.radius;
             gfx_FillRectangle(ball.prevX - clearSize/2, ball.prevY - clearSize/2, ball.radius - 3, ball.radius - 3);
         } else {
-            // If just became inactive, clear both positions
             int clearSize = ball.radius;
             gfx_FillRectangle(ball.prevX - clearSize/2, ball.prevY - clearSize/2, clearSize, clearSize);
             gfx_FillRectangle(ball.x - clearSize/2, ball.y - clearSize/2, clearSize, clearSize);

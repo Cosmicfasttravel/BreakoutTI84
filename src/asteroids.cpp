@@ -212,7 +212,7 @@ int game() {
                             ball.pHit = false;
                             ball.incY *= -1;
                         }
-
+                        draw_box();
                         switch (randInt(1,30)) {
                             case 1:
                                 if (renderMode == SLOW) {
