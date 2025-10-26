@@ -27,6 +27,7 @@ enum renderingMode {
 struct powerups {
     int x{};
     int y{};
+    int ix{};
     powerupTypes type{};
     bool active{};
 };

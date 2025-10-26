@@ -48,6 +48,7 @@ int game() {
     bool allBallsInactive = false;
     bool isBallSpawned = false;
     bool allBoxesInactive = false;
+    bool boxDraw = false;
 
     while(true) {
         //key checks
@@ -168,7 +169,7 @@ int game() {
                 if (ball.active == false) continue;
                 update_ball(&ball);
                 draw_ball(&ball);
-                if (ball.y >= paddle.y - 3 - ball.radius && ball.y <= paddle.y - ball.radius) {
+                if (ball.y >= paddle.y - ball.radius && ball.y <= paddle.y - ball.radius) {
                     if (ball.x >= paddle.x && ball.x <= paddle.x + 0.5*paddle.w) {
                         if (!ball.pHit) {
                             if (ball.incX == 0) ball.incX = (randInt(1,2) == 1) ? 1 : -1;
@@ -190,8 +191,12 @@ int game() {
             // box draw
             if (renderMode == SLOW) {
                 draw_box();
+                update_powerups_slow();
             }
-            update_powerups();
+            else {
+                update_powerups_fast();
+            }
+
             for (auto &boxe : boxes) {
                 if (!boxe.active) continue;
                 for (auto &ball : balls) {
@@ -210,13 +215,31 @@ int game() {
 
                         switch (randInt(1,30)) {
                             case 1:
-                                spawn_powerup(boxe.x, boxe.y, MULTIBALL);
+                                if (renderMode == SLOW) {
+                                    spawn_powerup(boxe.x, boxe.y, MULTIBALL);
+                                }
+                                else {
+                                    spawn_powerup(randInt(1,319), 180, MULTIBALL);
+                                }
+                                draw_box();
                                 break;
                             case 2:
-                                spawn_powerup(boxe.x, boxe.y, EXTRA_LIFE);
+                                if (renderMode == SLOW) {
+                                    spawn_powerup(boxe.x, boxe.y, EXTRA_LIFE);
+                                }
+                                else {
+                                    spawn_powerup(randInt(1,319), 180, EXTRA_LIFE);
+                                }
+                                draw_box();
                                 break;
                             case 3:
-                                spawn_powerup(boxe.x, boxe.y, WIDE_PADDLE);
+                                if (renderMode == SLOW) {
+                                    spawn_powerup(boxe.x, boxe.y, WIDE_PADDLE);
+                                }
+                                else {
+                                    spawn_powerup(randInt(1,319), 180, WIDE_PADDLE);
+                                }
+                                draw_box();
                                 break;
                             default:;
                         }
@@ -229,7 +252,12 @@ int game() {
                 }
             }
         }
+
         lives_text();
+        if (!boxDraw) {
+            draw_box();
+            boxDraw = true;
+        }
     }
     return 0;
 }

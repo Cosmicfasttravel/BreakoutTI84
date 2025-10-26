@@ -5,7 +5,7 @@ void spawn_ball(int x, int y, int ix, int iy) {
         if (!ball.active) {
             ball.x = x;
             ball.y = y;
-            ball.radius = 5;
+            ball.radius = 8;
             ball.incX = ix;
             ball.incY = iy;
             ball.active = true;
@@ -79,10 +79,7 @@ void draw_paddle(uint16_t x, uint8_t y) {
     gfx_FillRectangle_NoClip(x, y, paddle.w, 2);
 }
 
-void draw_ball(const ball *ball) {
-    if (!ball->active) return;
-    gfx_FillRectangle(ball->x, ball->y, ball->radius, ball->radius);
-}
+
 
 //clearing
 //-----------------------------
@@ -96,14 +93,24 @@ void clear_box() {
     }
 }
 //ball clear
+void draw_ball(const ball *ball) {
+    if (!ball->active) return;
+    // Center the rectangle on the ball's position
+    gfx_FillRectangle(ball->x - ball->radius/2, ball->y - ball->radius/2, ball->radius - 3, ball->radius - 3);
+}
+
 void clear_ball() {
+    gfx_SetColor(0);
     for (auto &ball : balls) {
         if (ball.active) {
-            gfx_SetColor(0);
-            gfx_FillRectangle(ball.prevX, ball.prevY, ball.radius, ball.radius);
-        }else if (!ball.active) {
-            gfx_FillRectangle(ball.prevX, ball.prevY, ball.radius, ball.radius);
-            gfx_FillRectangle(ball.x, ball.x, ball.radius, ball.radius);
+            // Clear slightly larger area to prevent trails
+            int clearSize = ball.radius;
+            gfx_FillRectangle(ball.prevX - clearSize/2, ball.prevY - clearSize/2, ball.radius - 3, ball.radius - 3);
+        } else {
+            // If just became inactive, clear both positions
+            int clearSize = ball.radius;
+            gfx_FillRectangle(ball.prevX - clearSize/2, ball.prevY - clearSize/2, clearSize, clearSize);
+            gfx_FillRectangle(ball.x - clearSize/2, ball.y - clearSize/2, clearSize, clearSize);
         }
     }
 }

@@ -16,11 +16,13 @@ void generate_powerup(powerups *p, int *livPtr) {
     }
 }
 
+
 void spawn_powerup(int x, int y, powerupTypes type) {
     for (auto & powerups : powerup) {
         if (powerups.active) continue;
         powerups.x = x;
         powerups.y = y;
+        powerups.ix = randInt(-1, 1);
         powerups.active = true;
         powerups.type = type;
         break;
@@ -35,11 +37,26 @@ void clear_powerups(){
     }
 }
 
-void update_powerups() {
+void update_powerups_slow() {
     for (auto &p : powerup) {
         if (!p.active) continue;
         gfx_FillCircle(p.x, p.y, 3);
         p.y += 1;
+        if (p.y >= 235) {
+            p.active = false;
+        }
+    }
+}
+
+void update_powerups_fast() {
+    for (auto &p : powerup) {
+        if (!p.active) continue;
+        gfx_FillCircle(p.x, p.y, 3);
+        p.y += 1;
+        p.x += p.ix;
+        if (p.x < 5 || p.x > 315) {
+            p.ix *= -1;
+        }
         if (p.y >= 235) {
             p.active = false;
         }
