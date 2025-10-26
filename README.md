@@ -4,6 +4,7 @@ This is a fun, work-in-progress calculator game. Ensure you download the latest 
 ### Gameplay:
 - Note that this is not the final version, and it is subject to change.
 - Also note that many elements, such as powerup spawning, are increased to show what they do; they will be decreased in the next releases
+- Also this is not the current version, it is just the last I recorded
 <img width="320" height="240" alt="apng" src="https://github.com/user-attachments/assets/9c9bcff5-cf41-47f4-9ddd-462b4acb0969" />
 
 
