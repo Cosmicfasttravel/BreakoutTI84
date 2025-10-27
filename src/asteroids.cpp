@@ -229,7 +229,6 @@ int game() {
                                 else {
                                     spawn_powerup(randInt(1,319), 180, MULTIBALL);
                                 }
-                                draw_box();
                                 break;
                             case 2:
                                 if (renderMode == SLOW) {
@@ -238,7 +237,6 @@ int game() {
                                 else {
                                     spawn_powerup(randInt(1,319), 180, EXTRA_LIFE);
                                 }
-                                draw_box();
                                 break;
                             case 3:
                                 if (renderMode == SLOW) {
@@ -247,7 +245,6 @@ int game() {
                                 else {
                                     spawn_powerup(randInt(1,319), 180, WIDE_PADDLE);
                                 }
-                                draw_box();
                                 break;
                             default:;
                         }
