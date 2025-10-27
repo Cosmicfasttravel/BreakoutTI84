@@ -12,5 +12,4 @@ void lives_text() {
     gfx_PrintStringXY(buf, 50, 230);
     gfx_SetTextTransparentColor(255);
     gfx_SetTextBGColor(255);
-    gfx_SwapDraw();
 }

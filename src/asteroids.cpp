@@ -169,7 +169,7 @@ int game() {
                 if (ball.active == false) continue;
                 update_ball(&ball);
                 draw_ball(&ball);
-                if (ball.y >= paddle.y - ball.radius && ball.y <= paddle.y - ball.radius) {
+                if (ball.y >= paddle.y - ball.radius && ball.y <= paddle.y + ball.radius) {
                     if (ball.x >= paddle.x && ball.x <= paddle.x + 0.5*paddle.w) {
                         if (!ball.pHit) {
                             if (ball.incX == 0) ball.incX = (randInt(1,2) == 1) ? 1 : -1;
@@ -258,6 +258,7 @@ int game() {
             draw_box();
             boxDraw = true;
         }
+        gfx_BlitBuffer();
     }
     return 0;
 }

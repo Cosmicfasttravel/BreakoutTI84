@@ -22,7 +22,9 @@ uint16_t random_color() {
 }
 //very big random level creating through multidimensional array
 void generate_connected_level(int create) {
-
+    for (auto & boxe : boxes) {
+        boxe.active = false;
+    }
     static bool placed[BOX_ROWS][BOX_COLS];
     if (create == 0) {
         for (auto & row : placed) {
@@ -30,15 +32,12 @@ void generate_connected_level(int create) {
                 col = false;
             }
         }
-        for (auto & boxe : boxes) {
-            boxe.active = false;
-        }
         uint16_t maxBoxes = 20 + randInt(0,49);
         uint16_t startRow = 5 + randInt(0,9);
         uint16_t startCol = 5 + randInt(0,9);
 
         //map
-        placed[BOX_ROWS][BOX_COLS] = {{false}};
+
 
         // start from one box
         int curRow = startRow;
@@ -95,6 +94,7 @@ void generate_connected_level(int create) {
                 }
             }
         }
+
     }
 
 }

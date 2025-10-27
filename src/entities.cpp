@@ -5,7 +5,7 @@ void spawn_ball(int x, int y, int ix, int iy) {
         if (!ball.active) {
             ball.x = x;
             ball.y = y;
-            ball.radius = 8;
+            ball.radius = 2;
             ball.incX = ix;
             ball.incY = iy;
             ball.active = true;
@@ -41,22 +41,22 @@ void update_ball(ball *ball) {
     ball->y += ball->incY;
 
     // Collision with walls
-    if (ball->x - ball->radius < 0) {
-        ball->x = ball->radius;
+    if (ball->x - ball->radius < 2) {
+        ball->x = ball->radius + 2;
         ball->incX *= -1;
         ball->pHit = false;
     }
-    if (ball->x + ball->radius > 319) {
-        ball->x = 319 - ball->radius;
+    if (ball->x + ball->radius > 318) {
+        ball->x = 319 - ball->radius - 2;
         ball->incX *= -1;
         ball->pHit = false;
     }
-    if (ball->y - ball->radius < 0) {
-        ball->y = ball->radius;
+    if (ball->y - ball->radius < 2) {
+        ball->y = ball->radius + 2;
         ball->incY *= -1;
         ball->pHit = false;
     }
-    if (ball->y + ball->radius > 239) {
+    if (ball->y + ball->radius > 238) {
         ball->active = false; // Ball lost
 
 
@@ -81,8 +81,6 @@ void draw_paddle(uint16_t x, uint8_t y) {
 
 
 
-//clearing
-//-----------------------------
 //box clear
 void clear_box() {
     for (auto &boxe : boxes) {
@@ -92,23 +90,24 @@ void clear_box() {
         }
     }
 }
-//ball clear
+
+//ball draw
 void draw_ball(const ball *ball) {
     if (!ball->active) return;
-    // Center the rectangle on the ball's position
-    gfx_FillRectangle(ball->x - ball->radius/2, ball->y - ball->radius/2, ball->radius - 3, ball->radius - 3);
+    gfx_FillCircle(ball->x, ball->y, ball->radius);
 }
 
+//ball clear
 void clear_ball() {
     gfx_SetColor(0);
-    for (auto &ball : balls) {
-        if (ball.active) {
-            int clearSize = ball.radius;
-            gfx_FillRectangle(ball.prevX - clearSize/2, ball.prevY - clearSize/2, ball.radius - 3, ball.radius - 3);
+    for (auto &b : balls) {
+        if (b.active) {
+            // Clear at previous position
+            gfx_FillCircle(b.prevX, b.prevY, b.radius + 2);
         } else {
-            int clearSize = ball.radius;
-            gfx_FillRectangle(ball.prevX - clearSize/2, ball.prevY - clearSize/2, clearSize, clearSize);
-            gfx_FillRectangle(ball.x - clearSize/2, ball.y - clearSize/2, clearSize, clearSize);
+            // Clear both positions when inactive
+            gfx_FillCircle(b.prevX, b.prevY, b.radius + 2);
+            gfx_FillCircle(b.x, b.y, b.radius + 1);
         }
     }
 }
