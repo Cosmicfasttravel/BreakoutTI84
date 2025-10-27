@@ -36,6 +36,7 @@ int level3[BOX_ROWS][BOX_COLS] = {
     {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 };
+
 int main_menu(renderingMode *mode) {
     menuOption = MENU_START;
         while (true) {
