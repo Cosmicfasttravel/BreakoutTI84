@@ -1,6 +1,9 @@
 ### What this is
 This is a fun, work-in-progress calculator game. Ensure you download the latest release for the most up-to-date bug fixes (Installation guide below).
 ## 
+### Note about releases
+- If you want the absolute latest release I would recommend checking below for the source code installation instructions
+##
 ### Gameplay:
 - Note that this is not the final version, and it is subject to change.
 - Note also that this is laggier than the release version
