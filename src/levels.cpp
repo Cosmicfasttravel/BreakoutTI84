@@ -16,8 +16,6 @@ uint16_t random_color() {
             return 79;
         case 3:
             return 255;
-        default:
-            return 0;
     }
 }
 //very big random level creating through multidimensional array
