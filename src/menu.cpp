@@ -197,3 +197,51 @@ void preview_level(int level) {
     while (!os_GetCSC()) {}
 }
 
+bool pause_menu() {
+    while (true) {
+        gfx_FillScreen(0);
+        gfx_SetTextFGColor(255);
+        gfx_SetTextBGColor(0);
+        gfx_SetTextTransparentColor(0);
+        gfx_SetTransparentColor(0);
+        gfx_SetTextScale(2, 2);
+        gfx_PrintStringXY("Paused", 10, 20);
+        gfx_PrintStringXY("_______________", 10, 22);
+        gfx_SetTextScale(1, 1);
+        gfx_PrintStringXY((pauseOption == PAUSE_RESUME) ? "-> Resume" : "   Resume", 60, 100);
+        gfx_PrintStringXY((pauseOption == PAUSE_EXIT) ? "-> Exit" : "   Exit", 60, 160);
+        gfx_SwapDraw();
+
+        sk_key_t key;
+        do {
+            key = os_GetCSC();
+        } while (key == 0); // wait for key press
+
+        switch (key) {
+            case sk_Up:
+                pauseOption = static_cast<PauseOptions>((pauseOption - 1 + 3) % 3);
+                break;
+            case sk_Down:
+                pauseOption = static_cast<PauseOptions>((pauseOption + 1) % 3);
+                break;
+            case sk_Enter:
+                if (pauseOption == PAUSE_RESUME) {
+                    gfx_FillScreen(0);
+                    draw_box();
+                    return false;
+                }
+                if (pauseOption == PAUSE_EXIT) {
+                    gfx_FillScreen(255);
+                    gfx_SetTextFGColor(0);
+                    gfx_SetTextBGColor(255);
+                    gfx_SetTextTransparentColor(255);
+                    gfx_SetTransparentColor(255);
+                    return true;
+                }
+                break;
+            default:
+                break; // Ignore other keys
+        }
+    }
+}
+

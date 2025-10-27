@@ -71,6 +71,12 @@ int game() {
             isBallSpawned = true;
         }
 
+        if (kb_Data[6] & kb_Clear && pause_menu()) {
+            gfx_SwapDraw();
+            gfx_End();
+            game();
+            break;
+        }
         //game over
         if (lives<=0) {
             gfx_FillScreen(0);
@@ -84,6 +90,8 @@ int game() {
             gfx_End();
             break;
         }
+
+
 
         //I actually don't know :(
         for (auto &p : powerup) {

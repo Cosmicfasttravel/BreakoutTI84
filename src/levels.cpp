@@ -36,9 +36,6 @@ void generate_connected_level(int create) {
         uint16_t startRow = 5 + randInt(0,9);
         uint16_t startCol = 5 + randInt(0,9);
 
-        //map
-
-
         // start from one box
         int curRow = startRow;
         int curCol = startCol;
