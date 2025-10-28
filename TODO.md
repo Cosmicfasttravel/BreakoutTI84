@@ -2,21 +2,22 @@
 
 ## High Priority
 - [ ] Score system
-- [ ] Level progression
 - [ ] Fix paddle width reset
 - [ ] Better powerups
-- [ ] Pause menu
 - [ ] Better levels
+- [ ] And of course: bug fixes 
 
 ## Low Priority
-- [ ] Start menu
 - [ ] QOL changes
-- [ ] Options
 - [ ] Maybe level creation tool?
       
 
-## Completed
+## Complete
+- [x] Pause menu
+- [x] Start menu
+- [x] Options (framework)
 - [x] Power-ups working
+- [x] Level progression
 - [x] Multi-file organization
 - [x] Base game
 - [x] Color randomization
