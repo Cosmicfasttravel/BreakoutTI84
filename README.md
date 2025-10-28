@@ -3,14 +3,14 @@ This is a fun, work-in-progress calculator game. Ensure you download the latest 
 ## 
 ### Note about releases
 - If you want the absolute latest release I would recommend checking below for the source code installation instructions
+- The source code has the most up-to-date bug fixes, if you see an important bug on a previous release, chances are that its fixed in the source code
+- Also note that I try to release as often as I can
 ##
 ### Gameplay:
 - Note that this is not the final version, and it is subject to change.
 - Note also that this is laggier than the release version
-- Also this is not the current version, it is just the last I recorded
-<img width="320" height="240" alt="apng" src="https://github.com/user-attachments/assets/a6e21fac-9828-4cc6-bc03-70e30c6e57b0" />
-
-
+- This is the latest release version
+<img width="320" height="240" alt="apng" src="https://github.com/user-attachments/assets/cad4b6b1-f9a8-4a9b-a063-a7cd38bdbb26" />
 
 ### Installation guide (will be moved to releases)
 To install the program onto the calculator, you need to install the C libraries from https://github.com/CE-Programming/libraries, then you download the latest release from the release page, and install the .8xp file onto your calculator through the TI-Connect CE software. Note: it must be run through a shell, or it will not work. Use artifice for the shell; it is very effective
