@@ -134,12 +134,12 @@ int levels_menu() {
         gfx_PrintStringXY((levelOption == LOPTION_1) ? "-> Level 1" : "   Level 1", 60, 100); // replace options with actual options
         gfx_PrintStringXY((levelOption == LOPTION_2) ? "-> Level 2" : "   Level 2", 60, 120);
         gfx_PrintStringXY((levelOption == LOPTION_3) ? "-> Level 3" : "   Level 3", 60, 140);
-        gfx_PrintStringXY((levelOption == LPREVIEW) ? "-> Preview" : "   Preview", 60, 160);
-        if (level != 0 && level != 4) { // make sure 4 is preview value
+        gfx_PrintStringXY((levelOption == LPREVIEW) ? "-> Create" : "   Create", 60, 160);
+        if (level != -1 && level != 4) { // make sure 4 is preview value
             gfx_PrintStringXY("Level selected: " , 30, 50);
             gfx_SetTextXY(140, 50);
             gfx_PrintInt(level, 1);
-        }else if (level == 0){
+        }else if (level == -1){
             gfx_PrintStringXY("Level selected: Random level", 30, 50);
         }
         gfx_PrintStringXY("________________________________________", 0, 51);
@@ -160,7 +160,7 @@ int levels_menu() {
                 break;
             case sk_Enter:
                 if (levelOption != LPREVIEW) {
-                    level = static_cast<int>(levelOption);
+                    level = static_cast<int>(levelOption)  == 0 ? -1 : static_cast<int>(levelOption);
                 }
                 else if (levelOption == LPREVIEW) {
                     preview_level(level);
@@ -178,7 +178,7 @@ void preview_level(int level) {
 
     gfx_SetTransparentColor(0);
     gfx_FillScreen(0);
-    if (level == 0) {
+    if (level == -1) {
         generate_connected_level(0);
         draw_box();
     }

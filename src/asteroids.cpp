@@ -19,46 +19,52 @@ void pause() {
 }
 
 int game() {
-
     bool reset = true;
     bool allBallsInactive = false;
     bool isBallSpawned = false;
     bool allBoxesInactive = false;
-    bool boxDraw = false;
     static renderingMode renderMode = {};
-    int currentLevel = 0;
+    int currentLevel = -1;
     gfx_Begin();
-    srand(1467);
+    srand(rtc_Time());
     gfx_PrintInt(rtc_Time(), 9);
     pause();
+    gfx_SetDrawBuffer();
     while (true) {
         if (reset) {
+
+            reset = false;
             //initialize
             if (!main_menu(&renderMode)) {
                 return 0;
             }
-            gfx_SetDrawBuffer();
             gfx_FillScreen(0);
-            gfx_SwapDraw();
-            gfx_FillScreen(0);
+            gfx_BlitBuffer();
             lives = 3;
-            //box spawn loop
-            if (level == 0) {
+            if (level == -1) {
                 generate_connected_level(1);
                 currentLevel = 0;
             } else if (level == 1) {
                 load_level(level1);
                 currentLevel = 1;
-            } else {
-                //add other levels here
+            } else if (level == 2) {
+                load_level(level2);
+                currentLevel = 2;
+            }else if (level == 3) {
+                load_level(level3);
+                currentLevel = 3;
+            }
+            else {
+                gfx_FillScreen(255);
+                gfx_PrintStringXY("You didn't create a level", 80, 120);
+                gfx_BlitBuffer();
+                pause();
+                reset = true;
             }
             draw_box();
-            gfx_SwapDraw();
-            draw_box();
             gfx_SetColor(255);
-            reset = false;
-        }
-        else {
+
+        } else {
             while (true) {
                 //key checks
                 kb_Scan();
@@ -251,9 +257,8 @@ int game() {
                                     clear_box();
                                     draw_box();
                                     gfx_SetColor(0);
-
                                 }
-                                }
+                            }
                         }
                     }
                 }
@@ -262,7 +267,6 @@ int game() {
                 gfx_BlitBuffer();
             }
         }
-
     }
 }
 
