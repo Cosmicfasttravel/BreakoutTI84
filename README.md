@@ -3,7 +3,8 @@ This is a fun, work-in-progress calculator game. Ensure you download the latest 
 ## 
 ### Note about releases
 - If you want the absolute latest release I would recommend checking below for the source code installation instructions
-- The source code has the most up-to-date bug fixes, if you see an important bug on a previous release, chances are that its fixed in the source code!!!
+- The source code has the most up-to-date bug fixes, if you see an important bug on a previous release, chances are that its fixed in the source code
+- Also note that I try to release as often as I can
 ##
 ### Gameplay:
 - Note that this is not the final version, and it is subject to change.
