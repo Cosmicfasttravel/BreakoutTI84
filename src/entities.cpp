@@ -67,10 +67,11 @@ void update_ball(ball *ball) {
 //--------------------------
 //box draw
 void draw_box() {
+    gfx_SetColor(255);
     for (auto & boxes : boxes) {
         if (boxes.active) {
             gfx_SetColor(boxes.c);
-            gfx_FillRectangle_NoClip(boxes.x, boxes.y, boxes.w, boxes.h);
+            gfx_FillRectangle(boxes.x, boxes.y, boxes.w, boxes.h);
         }
     }
 }
@@ -86,7 +87,7 @@ void clear_box() {
     for (auto &boxe : boxes) {
         if (!boxe.active) {
             gfx_SetColor(0);
-            gfx_FillRectangle_NoClip(boxe.x, boxe.y, boxe.w, boxe.h);
+            gfx_FillRectangle(boxe.x, boxe.y, boxe.w, boxe.h);
         }
     }
 }

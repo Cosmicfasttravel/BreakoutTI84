@@ -220,10 +220,10 @@ bool pause_menu() {
 
         switch (key) {
             case sk_Up:
-                pauseOption = static_cast<PauseOptions>((pauseOption - 1 + 3) % 3);
+                pauseOption = static_cast<PauseOptions>((pauseOption - 1 + 2) % 2);
                 break;
             case sk_Down:
-                pauseOption = static_cast<PauseOptions>((pauseOption + 1) % 3);
+                pauseOption = static_cast<PauseOptions>((pauseOption + 1) % 2);
                 break;
             case sk_Enter:
                 if (pauseOption == PAUSE_RESUME) {

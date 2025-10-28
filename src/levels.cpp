@@ -15,16 +15,19 @@ uint16_t random_color() {
         case 2:
             return 79;
         case 3:
-            return 255;
+            return 192;
+        default:
+            return 192;
     }
 }
 //very big random level creating through multidimensional array
 void generate_connected_level(int create) {
-    for (auto & boxe : boxes) {
-        boxe.active = false;
-    }
+
     static bool placed[BOX_ROWS][BOX_COLS];
     if (create == 0) {
+        for (auto & boxe : boxes) {
+            boxe.active = false;
+        }
         for (auto & row : placed) {
             for (bool & col : row) {
                 col = false;
@@ -75,20 +78,8 @@ void generate_connected_level(int create) {
         }
     }
     else if (create == 1) {
-        int boxIndex = 0;
-        for (int row = 0; row < BOX_ROWS; row++) {
-            for (int col = 0; col < BOX_COLS; col++) {
-                if (placed[row][col]) {
-                    boxes[boxIndex].x = START_X + col * BOX_WIDTH;
-                    boxes[boxIndex].y = START_Y + row * BOX_HEIGHT;
-                    boxes[boxIndex].w = BOX_WIDTH;
-                    boxes[boxIndex].h = BOX_HEIGHT;
-                    boxes[boxIndex].active = true;
-                    boxes[boxIndex].c = random_color();
-                    boxIndex++;
-                }
-            }
-        }
+
+
 
     }
 
