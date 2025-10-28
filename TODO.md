@@ -7,6 +7,7 @@
 - [ ] Better powerups
 - [ ] Pause menu
 - [ ] Better levels
+- [ ] Make levels and ball reset when restarting after exiting through the pause menu
 
 ## Low Priority
 - [ ] Start menu
