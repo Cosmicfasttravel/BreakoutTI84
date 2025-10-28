@@ -9,7 +9,7 @@ This is a fun, work-in-progress calculator game. Ensure you download the latest 
 ### Gameplay:
 - Note that this is not the final version, and it is subject to change.
 - Note also that this is laggier than the release version
-- This is the latest release version
+- This is not the latest release version
 <img width="320" height="240" alt="apng" src="https://github.com/user-attachments/assets/cad4b6b1-f9a8-4a9b-a063-a7cd38bdbb26" />
 
 ### Installation guide (will be moved to releases)
