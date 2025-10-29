@@ -6,6 +6,8 @@
 //functions
 void spawn_box(int x, int y, int w, int h);
 
+void delete_balls();
+
 void draw_box();
 void update_ball(ball *ball);
 void draw_paddle(uint16_t x, uint8_t y);

@@ -13,6 +13,21 @@ void spawn_ball(int x, int y, int ix, int iy) {
         }
     }
 }
+void delete_balls() {
+    for (auto & ball : balls) {
+        if (ball.active) {
+            ball.active = false;
+            ball.incX = 0;
+            ball.incY = 0;
+            ball.x = 0;
+            ball.y = 0;
+            ball.radius = 0;
+            break;
+        }
+
+    }
+
+}
 //box spawning, just setting
 void spawn_box(int x, int y, int w, int h) {
     for (auto & box : boxes) {

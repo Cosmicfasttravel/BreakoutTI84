@@ -32,7 +32,7 @@ int game() {
     gfx_SetDrawBuffer();
     while (true) {
         if (reset) {
-
+            delete_balls();
             reset = false;
             //initialize
             if (!main_menu(&renderMode)) {
