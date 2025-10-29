@@ -24,9 +24,7 @@ void delete_balls() {
             ball.radius = 0;
             break;
         }
-
     }
-
 }
 //box spawning, just setting
 void spawn_box(int x, int y, int w, int h) {

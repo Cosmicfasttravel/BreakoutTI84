@@ -55,11 +55,8 @@ int game() {
                 currentLevel = 3;
             }
             else {
-                gfx_FillScreen(255);
-                gfx_PrintStringXY("You didn't create a level", 80, 120);
-                gfx_BlitBuffer();
-                pause();
-                reset = true;
+                generate_connected_level(0);
+                currentLevel = 0;
             }
             draw_box();
             gfx_SetColor(255);
