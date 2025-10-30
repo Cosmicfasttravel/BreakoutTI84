@@ -8,3 +8,4 @@ enum ThemeOptions theme;
 //vars
 int lives;
 int level;
+int createdTheme[10];

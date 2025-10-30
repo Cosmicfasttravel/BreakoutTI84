@@ -16,6 +16,14 @@ enum Options {
     OPTIONS_3,
 };
 
+enum ColorOptions {
+    RED,
+    ORANGE,
+    YELLOW,
+    GREEN,
+    BLUE,
+    PURPLE,
+};
 
 enum LevelOptions {
     LOPTION_0 = 0,
@@ -33,11 +41,13 @@ static enum MenuOption menuOption;
 static enum Options options;
 static enum LevelOptions levelOption;
 static enum PauseOptions pauseOption;
+static enum ColorOptions colorOption;
 
 int main_menu(renderingMode *mode);
 int options_menu(renderingMode *mode);
 int levels_menu();
 void preview_level(int level);
+void create_theme();
 bool pause_menu();
 extern int level1[BOX_ROWS][BOX_COLS];
 extern int level2[BOX_ROWS][BOX_COLS];

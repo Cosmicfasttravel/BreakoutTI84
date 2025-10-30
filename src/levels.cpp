@@ -52,8 +52,39 @@ uint16_t random_color() {
     if (theme == RANDOM) {
         return randInt(2,253);
     }
-
-
+    if (theme == CREATE) {
+        for (int j = 0; j < 10; j++) {
+            if (createdTheme[j] == 0) {
+                i = randInt(0,j-1);
+                break;
+            }
+        }
+        switch (i) {
+            case 0:
+                return createdTheme[0];
+            case 1:
+                return createdTheme[1];
+            case 2:
+                return createdTheme[2];
+            case 3:
+                return createdTheme[3];
+            case 4:
+                return createdTheme[4];
+            case 5:
+                return createdTheme[5];
+            case 6:
+                return createdTheme[6];
+            case 7:
+                return createdTheme[7];
+            case 8:
+                return createdTheme[8];
+            case 9:
+                return createdTheme[9];
+            default:
+                return 255;
+        }
+    }
+    return 255;
 }
 //very big random level creating through multidimensional array
 void generate_connected_level(int create) {

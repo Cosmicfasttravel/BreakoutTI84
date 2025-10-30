@@ -105,7 +105,10 @@ int options_menu(renderingMode *mode) {
         if (theme == RANDOM) {
             gfx_PrintStringXY("Random", 160, 120);
         }
-        gfx_PrintStringXY((options == OPTIONS_3) ? "-> Option 3" : "   Option 3", 60, 140);
+        if (theme == CREATE) {
+            gfx_PrintStringXY("Created theme", 160, 120);
+        }
+        gfx_PrintStringXY((options == OPTIONS_3) ? "-> Create theme" : "   Create theme", 60, 140);
         gfx_SetTextScale(1, 1);
         gfx_PrintStringXY("2nd to quit", 235, 229);
         gfx_Rectangle(230, 225, 80, 15);
@@ -129,7 +132,10 @@ int options_menu(renderingMode *mode) {
                     options1 = !options1;
                 }
                 if (options == OPTIONS_2) {
-                    theme = static_cast<ThemeOptions>((theme + 1) % 4);
+                    theme = static_cast<ThemeOptions>((theme + 1) % 5);
+                }
+                if (options == OPTIONS_3) {
+                    create_theme();
                 }
 
                 break;
@@ -263,5 +269,90 @@ bool pause_menu() {
                 break; // Ignore other keys
         }
     }
+}
+
+void create_theme() {
+    int boxNum = 0;
+    for (int i = 0; i < 10; i++) {
+        createdTheme[i] = 0;
+    }
+    while (boxNum < 10) {
+        gfx_FillScreen(0);
+        gfx_SetTextFGColor(255);
+        gfx_SetTextBGColor(0);
+        gfx_SetTextTransparentColor(0);
+        gfx_SetTransparentColor(0);
+        gfx_PrintStringXY("Theme Creator", 10, 20);
+        gfx_PrintStringXY("________________________", 10, 22);
+        gfx_PrintStringXY("Select color for box ", 10, 80);
+        gfx_SetTextXY(160, 80);
+        gfx_PrintInt(boxNum + 1, 1);
+        gfx_PrintStringXY(" of 10", 180, 80);
+        if (colorOption == RED) {
+            gfx_PrintStringXY("-> Red", 60, 120);
+            gfx_SetColor(224);
+        }
+        if (colorOption == ORANGE) {
+            gfx_PrintStringXY("-> Orange", 60, 120);
+            gfx_SetColor(227);
+        }
+        if (colorOption == YELLOW) {
+            gfx_PrintStringXY("-> Yellow", 60, 120);
+            gfx_SetColor(231);
+        }
+        if (colorOption == GREEN) {
+            gfx_PrintStringXY("-> Green", 60, 120);
+            gfx_SetColor(7);
+        }
+        if (colorOption == BLUE) {
+            gfx_PrintStringXY("-> Blue", 60, 120);
+            gfx_SetColor(18);
+        }
+        if (colorOption == PURPLE) {
+            gfx_PrintStringXY("-> Purple", 60, 120);
+            gfx_SetColor(120);
+        }
+        gfx_FillRectangle(30, 119, 15, 10);
+        gfx_SetColor(255);
+        gfx_SetTextScale(1, 1);
+        gfx_PrintStringXY("2nd to quit", 235, 229);
+        gfx_Rectangle(230, 225, 80, 15);
+        gfx_BlitBuffer();
+        sk_key_t key;
+        do {
+            key = os_GetCSC();
+        } while (key == 0);
+        switch (key) {
+            case sk_Up:
+                colorOption = static_cast<ColorOptions>((colorOption - 1 + 6) % 6);
+                break;
+            case sk_Down:
+                colorOption = static_cast<ColorOptions>((colorOption + 1) % 6);
+                break;
+            case sk_Enter:
+                switch (colorOption) {
+                    case RED:    createdTheme[boxNum] = 224; break;
+                    case ORANGE: createdTheme[boxNum] = 227; break;
+                    case YELLOW: createdTheme[boxNum] = 231; break;
+                    case GREEN:  createdTheme[boxNum] = 7;   break;
+                    case BLUE:   createdTheme[boxNum] = 18;  break;
+                    case PURPLE: createdTheme[boxNum] = 120; break;
+                }
+                boxNum++;
+                break;
+            case sk_2nd:
+                gfx_SetTextFGColor(0);
+                gfx_SetTextBGColor(255);
+                gfx_SetTextTransparentColor(255);
+                gfx_SetTransparentColor(255);
+                return;
+            default:
+                break;
+        }
+    }
+    gfx_SetTextFGColor(0);
+    gfx_SetTextBGColor(255);
+    gfx_SetTextTransparentColor(255);
+    gfx_SetTransparentColor(255);
 }
 
