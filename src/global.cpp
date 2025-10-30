@@ -4,6 +4,7 @@ struct ball balls[MAX_BALLS];
 struct powerups powerup[MAX_POWERUPS];
 struct box boxes[MAX_BOXES];
 enum renderingMode mode;
+enum ThemeOptions theme;
 //vars
 int lives;
 int level;

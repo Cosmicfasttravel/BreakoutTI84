@@ -7,18 +7,53 @@
 //color (cool)
 uint16_t random_color() {
     int i = randInt(0,3);
-    switch (i) {
-        case 0:
-            return 7;
-        case 1:
-            return 20;
-        case 2:
-            return 79;
-        case 3:
-            return 192;
-        default:
-            return 192;
+    if (theme == WARM) {
+        switch (i) {
+            case 0:
+                return 226;
+            case 1:
+                return 231;
+            case 2:
+                return 232;
+            case 3:
+                return 192;
+            default:
+                return 255;
+        }
     }
+    if (theme == COOL) {
+        switch (i) {
+            case 0:
+                return 18;
+            case 1:
+                return 5;
+            case 2:
+                return 30;
+            case 3:
+                return 152;
+            default:
+                return 255;
+        }
+    }
+    if (theme == GRAYSCALE) {
+        switch (i) {
+            case 0:
+                return 74;
+            case 1:
+                return 255;
+            case 2:
+                return 107;
+            case 3:
+                return 181;
+            default:
+                return 255;
+        }
+    }
+    if (theme == RANDOM) {
+        return randInt(2,253);
+    }
+
+
 }
 //very big random level creating through multidimensional array
 void generate_connected_level(int create) {

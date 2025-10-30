@@ -56,6 +56,14 @@ struct box {
     bool cleared = false;
 };
 
+enum ThemeOptions {
+    WARM,
+    COOL,
+    GRAYSCALE,
+    RANDOM,
+};
+
+
 
 //struct vars
 extern struct paddle paddle;
@@ -63,6 +71,7 @@ extern struct ball balls[MAX_BALLS];
 extern struct powerups powerup[MAX_POWERUPS];
 extern struct box boxes[MAX_BOXES];
 extern enum renderingMode mode;
+extern enum ThemeOptions theme;
 //vars
 extern int lives;
 extern int level;

@@ -82,6 +82,7 @@ int main_menu(renderingMode *mode) {
 
 int options_menu(renderingMode *mode) {
     static bool options1 = true;
+
     while (true) {
         gfx_FillScreen(255);
         gfx_SetTextFGColor(0);
@@ -91,7 +92,19 @@ int options_menu(renderingMode *mode) {
         gfx_SetTextScale(1, 1);
         gfx_PrintStringXY((options == OPTIONS_1) ? "-> Fast Render: " : "   Fast render: ", 60, 100);
         gfx_PrintStringXY((options1) ? "   On" : "   Off", 160, 100);
-        gfx_PrintStringXY((options == OPTIONS_2) ? "-> Option 2" : "   Option 2", 60, 120);
+        gfx_PrintStringXY((options == OPTIONS_2) ? "-> Theme" : "   Theme", 60, 120);
+        if (theme == WARM) {
+            gfx_PrintStringXY("Warm", 160, 120);
+        }
+        if (theme == COOL) {
+            gfx_PrintStringXY("Cool", 160, 120);
+        }
+        if (theme == GRAYSCALE) {
+            gfx_PrintStringXY("Grayscale", 160, 120);
+        }
+        if (theme == RANDOM) {
+            gfx_PrintStringXY("Random", 160, 120);
+        }
         gfx_PrintStringXY((options == OPTIONS_3) ? "-> Option 3" : "   Option 3", 60, 140);
         gfx_SetTextScale(1, 1);
         gfx_PrintStringXY("2nd to quit", 235, 229);
@@ -107,12 +120,18 @@ int options_menu(renderingMode *mode) {
                 options = static_cast<Options>((options + 1) % 3);
                 break;
             case sk_Enter:
-                if (*mode == SLOW) {
-                    *mode = FAST;
-                } else {
-                    *mode = SLOW;
+                if (options == OPTIONS_1) {
+                    if (*mode == SLOW) {
+                        *mode = FAST;
+                    } else {
+                        *mode = SLOW;
+                    }
+                    options1 = !options1;
                 }
-                options1 = !options1;
+                if (options == OPTIONS_2) {
+                    theme = static_cast<ThemeOptions>((theme + 1) % 4);
+                }
+
                 break;
             case sk_2nd:
                 return 0;

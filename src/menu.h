@@ -15,6 +15,8 @@ enum Options {
     OPTIONS_2,
     OPTIONS_3,
 };
+
+
 enum LevelOptions {
     LOPTION_0 = 0,
     LOPTION_1 = 1,
@@ -31,6 +33,7 @@ static enum MenuOption menuOption;
 static enum Options options;
 static enum LevelOptions levelOption;
 static enum PauseOptions pauseOption;
+
 int main_menu(renderingMode *mode);
 int options_menu(renderingMode *mode);
 int levels_menu();
