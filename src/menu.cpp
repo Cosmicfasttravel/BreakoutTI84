@@ -295,7 +295,7 @@ void create_theme() {
             gfx_SetTransparentColor(0);
             gfx_SetTextScale(1, 1);
             gfx_PrintStringXY("Theme Creator", 10, 20);
-            gfx_PrintStringXY("________________________", 10, 22);
+            gfx_PrintStringXY("_____________________________________", 13, 22);
             gfx_PrintStringXY("Enter color (0-255) for box ", 10, 80);
             gfx_SetTextXY(210, 80);
             gfx_PrintInt(boxNum + 1, 3);
