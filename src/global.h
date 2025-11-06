@@ -77,6 +77,9 @@ extern enum ThemeOptions theme;
 extern int lives;
 extern int level;
 extern int createdTheme[];
+extern int createdLevelX[];
+extern int createdLevelY[];
+
 //global functions
 uint16_t random_color();
 void spawn_ball(int x, int y, int ix, int iy);

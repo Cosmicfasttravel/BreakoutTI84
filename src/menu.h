@@ -38,11 +38,17 @@ enum PauseOptions {
     PAUSE_EXIT,
 };
 
+enum XYOPTIONS {
+    INPUTX,
+    INPUTY
+};
+
 static enum MenuOption menuOption;
 static enum Options options;
 static enum LevelOptions levelOption;
 static enum PauseOptions pauseOption;
 static enum ColorOptions colorOption;
+static enum XYOPTIONS xyOption;
 
 int main_menu(renderingMode *mode);
 int options_menu(renderingMode *mode);

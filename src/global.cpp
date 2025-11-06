@@ -9,3 +9,6 @@ enum ThemeOptions theme;
 int lives;
 int level;
 int createdTheme[200];
+int createdLevelX[200];
+int createdLevelY[200];
+

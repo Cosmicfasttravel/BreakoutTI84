@@ -193,8 +193,7 @@ int levels_menu() {
                     level = static_cast<int>(levelOption) == 0 ? -1 : static_cast<int>(levelOption);
                 } else if (levelOption == LPREVIEW) {
                     preview_level(level);
-                }
-                else if (levelOption == LCREATE) {
+                } else if (levelOption == LCREATE) {
                     create_level();
                 }
                 break;
@@ -384,31 +383,129 @@ void create_theme() {
 }
 
 void create_level() {
-    while (true) {
+    int boxNum = 0;
+    while (boxNum < 255) {
+        char inputStr[4] = "";
+        int inputNum = 0;
+        int curDigit = 0;
+        int boxX = 0;
+        int boxY = 0;
+        bool entering = true;
+        xyOption = INPUTX;
+        int zeroVal = 0;
+        while (entering) {
+            for (int j = 0; j < 200; j++) {
+                if (createdLevelX[j] == 0 && createdLevelY[j] == 0) {
+                    zeroVal = j;
+                    break;
+                }
+            }
+            gfx_FillScreen(0);
+            for (int i = 0; i < zeroVal; i++) {
+                gfx_SetColor(74);
+                gfx_FillRectangle(createdLevelX[i], createdLevelY[i], 15, 10);
+            }
+            gfx_SetColor(107);
+            gfx_FillRectangle(boxX, boxY, 15, 10);
+            gfx_SetTextFGColor(255);
+            gfx_SetTextBGColor(0);
+            gfx_SetTextTransparentColor(0);
+            gfx_SetTransparentColor(0);
+            gfx_SetTextScale(1, 1);
+            gfx_PrintStringXY("Level Creator", 10, 20);
+            gfx_PrintStringXY("_____________________________________", 13, 22);
+            gfx_PrintStringXY((xyOption == INPUTX) ? "Enter x-value (0-305) for box" : "Enter y-value (0-230) for box",10, 80);
+            gfx_SetTextXY(215, 80);
+            gfx_PrintInt(boxNum + 1, 3);
+            gfx_SetColor(255);
+            gfx_PrintStringXY("Input: ", 10, 100);
+            gfx_PrintStringXY(inputStr, 60, 100);
+            gfx_SetTextScale(1, 1);
+            gfx_PrintStringXY("Del to delete", 10, 140);
+            gfx_PrintStringXY("2nd to quit", 235, 229);
+            gfx_Rectangle(230, 225, 80, 15);
+            gfx_BlitBuffer();
+            sk_key_t key;
+            do {
+                key = os_GetCSC();
+            } while (key == 0);
 
-        gfx_FillScreen(0);
-        gfx_SetTextFGColor(255);
-        gfx_SetTextBGColor(0);
-        gfx_SetTextTransparentColor(0);
-        gfx_SetTransparentColor(0);
-        gfx_SetTextScale(1, 1);
-        gfx_PrintStringXY("Level Creator", 10, 20);
-        gfx_BlitBuffer();
-        sk_key_t key;
-        do {
-            key = os_GetCSC();
-        } while (key == 0);
+            int digit = -1;
+            switch (key) {
+                case sk_0: digit = 0;
+                    break;
+                case sk_1: digit = 1;
+                    break;
+                case sk_2: digit = 2;
+                    break;
+                case sk_3: digit = 3;
+                    break;
+                case sk_4: digit = 4;
+                    break;
+                case sk_5: digit = 5;
+                    break;
+                case sk_6: digit = 6;
+                    break;
+                case sk_7: digit = 7;
+                    break;
+                case sk_8: digit = 8;
+                    break;
+                case sk_9: digit = 9;
+                    break;
+                case sk_Del:
+                    if (curDigit > 0) {
+                        curDigit--;
+                        inputStr[curDigit] = '\0';
+                        inputNum /= 10;
+                    }
+                    break;
+                case sk_Enter:
+                    if (curDigit > 0 && inputNum <= 305 && xyOption == INPUTX) {
+                        inputStr[0] = '\0';
+                        inputNum = 0;
+                        curDigit = 0;
+                        createdLevelX[boxNum] = boxX;
+                        inputNum = 0;
+                        xyOption = INPUTY;
+                    }
+                    else if (curDigit > 0 && inputNum <= 230 && xyOption == INPUTY) {
+                        createdLevelY[boxNum] = boxY;
+                        boxNum++;
+                        entering = false;
+                        xyOption = INPUTX;
+                    }
+                    break;
+                case sk_2nd:
+                    gfx_SetTextFGColor(0);
+                    gfx_SetTextBGColor(255);
+                    gfx_SetTextTransparentColor(255);
+                    gfx_SetTransparentColor(255);
+                    return;
+                default:
+                    break;
+            }
 
-        switch (key) {
-            case sk_0:
-                break;
-            case sk_2nd:
-                gfx_SetTextFGColor(0);
-                gfx_SetTextBGColor(255);
-                gfx_SetTextTransparentColor(255);
-                gfx_SetTransparentColor(255);
-                return;
-            default:;
+            if (digit >= 0 && curDigit < 3) {
+                int newNum = inputNum * 10 + digit;
+                if (newNum <= 305 && xyOption == INPUTX) {
+                    inputStr[curDigit] = '0' + digit;
+                    curDigit++;
+                    inputStr[curDigit] = '\0';
+                    inputNum = newNum;
+                    boxX = newNum;
+                } else if (newNum <= 230 && xyOption == INPUTY) {
+                    inputStr[curDigit] = '0' + digit;
+                    curDigit++;
+                    inputStr[curDigit] = '\0';
+                    inputNum = newNum;
+                    boxY = newNum;
+                }
+
+            }
         }
     }
+    gfx_SetTextFGColor(0);
+    gfx_SetTextBGColor(255);
+    gfx_SetTextTransparentColor(255);
+    gfx_SetTransparentColor(255);
 }
