@@ -31,6 +31,7 @@ enum LevelOptions {
     LOPTION_2 = 2,
     LOPTION_3 = 3,
     LPREVIEW,
+    LCREATE
 };
 enum PauseOptions {
     PAUSE_RESUME,
@@ -48,6 +49,7 @@ int options_menu(renderingMode *mode);
 int levels_menu();
 void preview_level(int level);
 void create_theme();
+void create_level();
 bool pause_menu();
 extern int level1[BOX_ROWS][BOX_COLS];
 extern int level2[BOX_ROWS][BOX_COLS];

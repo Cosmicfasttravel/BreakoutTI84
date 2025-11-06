@@ -159,11 +159,11 @@ int levels_menu() {
         gfx_SetTextScale(1, 1);
         gfx_PrintStringXY((levelOption == LOPTION_0) ? "-> Random level" : "   Random level", 60, 80);
         gfx_PrintStringXY((levelOption == LOPTION_1) ? "-> Level 1" : "   Level 1", 60, 100);
-        // replace options with actual options
         gfx_PrintStringXY((levelOption == LOPTION_2) ? "-> Level 2" : "   Level 2", 60, 120);
         gfx_PrintStringXY((levelOption == LOPTION_3) ? "-> Level 3" : "   Level 3", 60, 140);
-        gfx_PrintStringXY((levelOption == LPREVIEW) ? "-> Create" : "   Create", 60, 160);
-        if (level != -1 && level != 4) {
+        gfx_PrintStringXY((levelOption == LPREVIEW) ? "-> Preview" : "   Preview", 60, 160);
+        gfx_PrintStringXY((levelOption == LCREATE) ? "-> Create" : "   Create", 60, 180);
+        if (level != -1 && level != 4 && level != 5) {
             // make sure 4 is preview value
             gfx_PrintStringXY("Level selected: ", 30, 50);
             gfx_SetTextXY(140, 50);
@@ -183,16 +183,19 @@ int levels_menu() {
         }
         switch (key) {
             case sk_Up:
-                levelOption = static_cast<LevelOptions>((levelOption - 1 + 5) % 5);
+                levelOption = static_cast<LevelOptions>((levelOption - 1 + 6) % 6);
                 break;
             case sk_Down:
-                levelOption = static_cast<LevelOptions>((levelOption + 1) % 5);
+                levelOption = static_cast<LevelOptions>((levelOption + 1) % 6);
                 break;
             case sk_Enter:
-                if (levelOption != LPREVIEW) {
+                if (levelOption != LPREVIEW && levelOption != LCREATE) {
                     level = static_cast<int>(levelOption) == 0 ? -1 : static_cast<int>(levelOption);
                 } else if (levelOption == LPREVIEW) {
                     preview_level(level);
+                }
+                else if (levelOption == LCREATE) {
+                    create_level();
                 }
                 break;
             case sk_2nd:
@@ -318,16 +321,26 @@ void create_theme() {
 
             int digit = -1;
             switch (key) {
-                case sk_0: digit = 0; break;
-                case sk_1: digit = 1; break;
-                case sk_2: digit = 2; break;
-                case sk_3: digit = 3; break;
-                case sk_4: digit = 4; break;
-                case sk_5: digit = 5; break;
-                case sk_6: digit = 6; break;
-                case sk_7: digit = 7; break;
-                case sk_8: digit = 8; break;
-                case sk_9: digit = 9; break;
+                case sk_0: digit = 0;
+                    break;
+                case sk_1: digit = 1;
+                    break;
+                case sk_2: digit = 2;
+                    break;
+                case sk_3: digit = 3;
+                    break;
+                case sk_4: digit = 4;
+                    break;
+                case sk_5: digit = 5;
+                    break;
+                case sk_6: digit = 6;
+                    break;
+                case sk_7: digit = 7;
+                    break;
+                case sk_8: digit = 8;
+                    break;
+                case sk_9: digit = 9;
+                    break;
                 case sk_Del:
                     if (curDigit > 0) {
                         curDigit--;
@@ -339,7 +352,7 @@ void create_theme() {
                     if (curDigit > 0 && inputNum <= 255) {
                         createdTheme[boxNum] = inputNum;
                         boxNum++;
-                        entering = false;  // Exit inner loop
+                        entering = false; // Exit inner loop
                     }
                     break;
                 case sk_2nd:
@@ -357,7 +370,7 @@ void create_theme() {
                 if (newNum <= 255) {
                     inputStr[curDigit] = '0' + digit;
                     curDigit++;
-                    inputStr[curDigit] = '\0';  // NULL TERMINATE
+                    inputStr[curDigit] = '\0';
                     inputNum = newNum;
                 }
             }
@@ -368,4 +381,34 @@ void create_theme() {
     gfx_SetTextBGColor(255);
     gfx_SetTextTransparentColor(255);
     gfx_SetTransparentColor(255);
+}
+
+void create_level() {
+    while (true) {
+
+        gfx_FillScreen(0);
+        gfx_SetTextFGColor(255);
+        gfx_SetTextBGColor(0);
+        gfx_SetTextTransparentColor(0);
+        gfx_SetTransparentColor(0);
+        gfx_SetTextScale(1, 1);
+        gfx_PrintStringXY("Level Creator", 10, 20);
+        gfx_BlitBuffer();
+        sk_key_t key;
+        do {
+            key = os_GetCSC();
+        } while (key == 0);
+
+        switch (key) {
+            case sk_0:
+                break;
+            case sk_2nd:
+                gfx_SetTextFGColor(0);
+                gfx_SetTextBGColor(255);
+                gfx_SetTextTransparentColor(255);
+                gfx_SetTransparentColor(255);
+                return;
+            default:;
+        }
+    }
 }
