@@ -405,7 +405,9 @@ void create_level() {
                 gfx_SetColor(74);
                 gfx_FillRectangle(createdLevelX[i], createdLevelY[i], 15, 10);
             }
-            gfx_SetColor(107);
+            gfx_SetColor(107); // this is a test
+
+
             gfx_FillRectangle(boxX, boxY, 15, 10);
             gfx_SetTextFGColor(255);
             gfx_SetTextBGColor(0);
