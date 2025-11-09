@@ -30,6 +30,7 @@ enum LevelOptions {
     LOPTION_1 = 1,
     LOPTION_2 = 2,
     LOPTION_3 = 3,
+    LCREATED = 4,
     LPREVIEW,
     LCREATE
 };
@@ -53,6 +54,7 @@ static enum XYOPTIONS xyOption;
 int main_menu(renderingMode *mode);
 int options_menu(renderingMode *mode);
 int levels_menu();
+static int boxNum = 0;
 void preview_level(int level);
 void create_theme();
 void create_level();

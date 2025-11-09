@@ -54,6 +54,10 @@ int game() {
                 load_level(level3);
                 currentLevel = 3;
             }
+            else if (level == 4) {
+                load_created_level(createdLevelX, createdLevelY);
+                currentLevel = 4;
+            }
             else {
                 generate_connected_level(0);
                 currentLevel = 0;

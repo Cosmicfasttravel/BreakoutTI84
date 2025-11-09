@@ -161,15 +161,19 @@ int levels_menu() {
         gfx_PrintStringXY((levelOption == LOPTION_1) ? "-> Level 1" : "   Level 1", 60, 100);
         gfx_PrintStringXY((levelOption == LOPTION_2) ? "-> Level 2" : "   Level 2", 60, 120);
         gfx_PrintStringXY((levelOption == LOPTION_3) ? "-> Level 3" : "   Level 3", 60, 140);
-        gfx_PrintStringXY((levelOption == LPREVIEW) ? "-> Preview" : "   Preview", 60, 160);
-        gfx_PrintStringXY((levelOption == LCREATE) ? "-> Create" : "   Create", 60, 180);
-        if (level != -1 && level != 4 && level != 5) {
+        gfx_PrintStringXY((levelOption == LCREATED) ? "-> Created Level" : "   Created Level", 60, 160);
+        gfx_PrintStringXY((levelOption == LPREVIEW) ? "-> Preview" : "   Preview", 60, 180);
+        gfx_PrintStringXY((levelOption == LCREATE) ? "-> Create" : "   Create", 60, 200);
+        if (level != -1 && level != 5 && level != 6 && level != 4) {
             // make sure 4 is preview value
             gfx_PrintStringXY("Level selected: ", 30, 50);
             gfx_SetTextXY(140, 50);
             gfx_PrintInt(level, 1);
         } else if (level == -1) {
             gfx_PrintStringXY("Level selected: Random level", 30, 50);
+        }
+        else if (level == 4) {
+            gfx_PrintStringXY("Level selected: Created Level", 30, 50);
         }
         gfx_PrintStringXY("________________________________________", 0, 51);
 
@@ -183,10 +187,10 @@ int levels_menu() {
         }
         switch (key) {
             case sk_Up:
-                levelOption = static_cast<LevelOptions>((levelOption - 1 + 6) % 6);
+                levelOption = static_cast<LevelOptions>((levelOption - 1 + 7) % 7);
                 break;
             case sk_Down:
-                levelOption = static_cast<LevelOptions>((levelOption + 1) % 6);
+                levelOption = static_cast<LevelOptions>((levelOption + 1) % 7);
                 break;
             case sk_Enter:
                 if (levelOption != LPREVIEW && levelOption != LCREATE) {
@@ -383,7 +387,6 @@ void create_theme() {
 }
 
 void create_level() {
-    int boxNum = 0;
     while (boxNum < 255) {
         char inputStr[4] = "";
         int inputNum = 0;
@@ -392,16 +395,9 @@ void create_level() {
         int boxY = 0;
         bool entering = true;
         xyOption = INPUTX;
-        int zeroVal = 0;
         while (entering) {
-            for (int j = 0; j < 200; j++) {
-                if (createdLevelX[j] == 0 && createdLevelY[j] == 0) {
-                    zeroVal = j;
-                    break;
-                }
-            }
             gfx_FillScreen(0);
-            for (int i = 0; i < zeroVal; i++) {
+            for (int i = 0; i < boxNum; i++) {
                 gfx_SetColor(74);
                 gfx_FillRectangle(createdLevelX[i], createdLevelY[i], 15, 10);
             }
@@ -464,7 +460,6 @@ void create_level() {
                 case sk_Enter:
                     if (curDigit > 0 && inputNum <= 305 && xyOption == INPUTX) {
                         inputStr[0] = '\0';
-                        inputNum = 0;
                         curDigit = 0;
                         createdLevelX[boxNum] = boxX;
                         inputNum = 0;

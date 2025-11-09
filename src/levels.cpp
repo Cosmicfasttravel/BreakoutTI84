@@ -151,3 +151,21 @@ void load_level(const int levelData[BOX_ROWS][BOX_COLS]) {
         }
     }
 }
+
+void load_created_level(const int xCord[200], const int yCord[200]) {
+    int zeroVal = 0;
+    for (int j = 0; j < 200; j++) {
+        if (createdLevelX[j] == 0 && createdLevelY[j] == 0) {
+            zeroVal = j;
+            break;
+        }
+    }
+    for (int i = 0; i < zeroVal; i++) {
+        boxes[i].x = xCord[i];
+        boxes[i].y = yCord[i];
+        boxes[i].w = BOX_WIDTH;
+        boxes[i].h = BOX_HEIGHT;
+        boxes[i].active = true;
+        boxes[i].c = random_color();
+    }
+}
