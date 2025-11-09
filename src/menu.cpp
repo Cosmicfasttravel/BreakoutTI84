@@ -5,6 +5,7 @@
 #include "../../include/graphx.h"
 #include "../../include/ti/getcsc.h"
 //box
+int boxNum = 0;
 int level1[BOX_ROWS][BOX_COLS] = {
     {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
     {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
@@ -51,7 +52,7 @@ int main_menu(renderingMode *mode) {
         gfx_PrintStringXY((menuOption == MENU_OPTIONS) ? "-> Options" : "   Options", 60, 120);
         gfx_PrintStringXY((menuOption == MENU_LEVELS) ? "-> Levels" : "   Levels", 60, 140);
         gfx_PrintStringXY((menuOption == MENU_EXIT) ? "-> Exit" : "   Exit", 60, 160);
-        gfx_SwapDraw();
+        gfx_BlitBuffer();
 
         // Get input
         sk_key_t key;
@@ -113,7 +114,7 @@ int options_menu(renderingMode *mode) {
         gfx_SetTextScale(1, 1);
         gfx_PrintStringXY("2nd to quit", 235, 229);
         gfx_Rectangle(230, 225, 80, 15);
-        gfx_SwapDraw();
+        gfx_BlitBuffer();
         sk_key_t key;
         while (!((key = os_GetCSC()))) {
         }
@@ -181,7 +182,7 @@ int levels_menu() {
         gfx_SetTextScale(1, 1);
         gfx_PrintStringXY("2nd to quit", 235, 229);
         gfx_Rectangle(230, 225, 80, 15);
-        gfx_SwapDraw();
+        gfx_BlitBuffer();
         sk_key_t key;
         while (!((key = os_GetCSC()))) {
         }
@@ -228,7 +229,11 @@ void preview_level(int level) {
         load_level(level3);
         draw_box();
     }
-    gfx_SwapDraw();
+    if (level == 4) {
+        load_created_level(createdLevelX, createdLevelY, boxNum);
+        draw_box();
+    }
+    gfx_BlitBuffer();
     while (!os_GetCSC()) {
     }
 }
@@ -246,7 +251,7 @@ bool pause_menu() {
         gfx_SetTextScale(1, 1);
         gfx_PrintStringXY((pauseOption == PAUSE_RESUME) ? "-> Resume" : "   Resume", 60, 100);
         gfx_PrintStringXY((pauseOption == PAUSE_EXIT) ? "-> Exit" : "   Exit", 60, 160);
-        gfx_SwapDraw();
+        gfx_BlitBuffer();
 
         sk_key_t key;
         do {
@@ -388,22 +393,15 @@ void create_theme() {
 
 void create_level() {
     while (boxNum < 255) {
-        char inputStr[4] = "";
-        int inputNum = 0;
-        int curDigit = 0;
         int boxX = 0;
         int boxY = 0;
-        bool entering = true;
-        xyOption = INPUTX;
-        while (entering) {
+        while (true) {
             gfx_FillScreen(0);
             for (int i = 0; i < boxNum; i++) {
                 gfx_SetColor(74);
                 gfx_FillRectangle(createdLevelX[i], createdLevelY[i], 15, 10);
             }
-            gfx_SetColor(107); // this is a test
-
-
+            gfx_SetColor(107);
             gfx_FillRectangle(boxX, boxY, 15, 10);
             gfx_SetTextFGColor(255);
             gfx_SetTextBGColor(0);
@@ -412,14 +410,10 @@ void create_level() {
             gfx_SetTextScale(1, 1);
             gfx_PrintStringXY("Level Creator", 10, 20);
             gfx_PrintStringXY("_____________________________________", 13, 22);
-            gfx_PrintStringXY((xyOption == INPUTX) ? "Enter x-value (0-305) for box" : "Enter y-value (0-230) for box",10, 80);
+
             gfx_SetTextXY(215, 80);
-            gfx_PrintInt(boxNum + 1, 3);
             gfx_SetColor(255);
-            gfx_PrintStringXY("Input: ", 10, 100);
-            gfx_PrintStringXY(inputStr, 60, 100);
             gfx_SetTextScale(1, 1);
-            gfx_PrintStringXY("Del to delete", 10, 140);
             gfx_PrintStringXY("2nd to quit", 235, 229);
             gfx_Rectangle(230, 225, 80, 15);
             gfx_BlitBuffer();
@@ -427,50 +421,31 @@ void create_level() {
             do {
                 key = os_GetCSC();
             } while (key == 0);
-
-            int digit = -1;
             switch (key) {
-                case sk_0: digit = 0;
+                case sk_Left:
+                    if (boxX >= 15) {
+                        boxX -= 15;
+                    }
                     break;
-                case sk_1: digit = 1;
+                case sk_Right:
+                    if (boxX <= 305) {
+                        boxX += 15;
+                    }
                     break;
-                case sk_2: digit = 2;
+                case sk_Up:
+                    if (boxY >= 10) {
+                        boxY -= 10;
+                    }
                     break;
-                case sk_3: digit = 3;
-                    break;
-                case sk_4: digit = 4;
-                    break;
-                case sk_5: digit = 5;
-                    break;
-                case sk_6: digit = 6;
-                    break;
-                case sk_7: digit = 7;
-                    break;
-                case sk_8: digit = 8;
-                    break;
-                case sk_9: digit = 9;
-                    break;
-                case sk_Del:
-                    if (curDigit > 0) {
-                        curDigit--;
-                        inputStr[curDigit] = '\0';
-                        inputNum /= 10;
+                case sk_Down:
+                    if (boxY <= 230) {
+                        boxY += 10;
                     }
                     break;
                 case sk_Enter:
-                    if (curDigit > 0 && inputNum <= 305 && xyOption == INPUTX) {
-                        inputStr[0] = '\0';
-                        curDigit = 0;
-                        createdLevelX[boxNum] = boxX;
-                        inputNum = 0;
-                        xyOption = INPUTY;
-                    }
-                    else if (curDigit > 0 && inputNum <= 230 && xyOption == INPUTY) {
-                        createdLevelY[boxNum] = boxY;
-                        boxNum++;
-                        entering = false;
-                        xyOption = INPUTX;
-                    }
+                    createdLevelX[boxNum] = boxX;
+                    createdLevelY[boxNum] = boxY;
+                    boxNum++;
                     break;
                 case sk_2nd:
                     gfx_SetTextFGColor(0);
@@ -480,24 +455,6 @@ void create_level() {
                     return;
                 default:
                     break;
-            }
-
-            if (digit >= 0 && curDigit < 3) {
-                int newNum = inputNum * 10 + digit;
-                if (newNum <= 305 && xyOption == INPUTX) {
-                    inputStr[curDigit] = '0' + digit;
-                    curDigit++;
-                    inputStr[curDigit] = '\0';
-                    inputNum = newNum;
-                    boxX = newNum;
-                } else if (newNum <= 230 && xyOption == INPUTY) {
-                    inputStr[curDigit] = '0' + digit;
-                    curDigit++;
-                    inputStr[curDigit] = '\0';
-                    inputNum = newNum;
-                    boxY = newNum;
-                }
-
             }
         }
     }

@@ -55,7 +55,7 @@ int game() {
                 currentLevel = 3;
             }
             else if (level == 4) {
-                load_created_level(createdLevelX, createdLevelY);
+                load_created_level(createdLevelX, createdLevelY, boxNum);
                 currentLevel = 4;
             }
             else {
@@ -159,7 +159,7 @@ int game() {
                             load_level(level3);
                             currentLevel = 3;
                         }
-                        if (currentLevel == 0) {
+                        if (currentLevel == 0 || currentLevel == 4) {
                             reset = true;
                             break;
                         }

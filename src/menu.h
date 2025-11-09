@@ -39,26 +39,23 @@ enum PauseOptions {
     PAUSE_EXIT,
 };
 
-enum XYOPTIONS {
-    INPUTX,
-    INPUTY
-};
+
 
 static enum MenuOption menuOption;
 static enum Options options;
 static enum LevelOptions levelOption;
 static enum PauseOptions pauseOption;
 static enum ColorOptions colorOption;
-static enum XYOPTIONS xyOption;
+
 
 int main_menu(renderingMode *mode);
 int options_menu(renderingMode *mode);
 int levels_menu();
-static int boxNum = 0;
 void preview_level(int level);
 void create_theme();
 void create_level();
 bool pause_menu();
+extern int boxNum;
 extern int level1[BOX_ROWS][BOX_COLS];
 extern int level2[BOX_ROWS][BOX_COLS];
 extern int level3[BOX_ROWS][BOX_COLS];
