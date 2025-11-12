@@ -152,7 +152,7 @@ void load_level(const int levelData[BOX_ROWS][BOX_COLS]) {
     }
 }
 
-void load_created_level(const int xCord[200], const int yCord[200], int count) {
+void load_created_level(const uint16_t xCord[200], const uint16_t yCord[200], int count) {
     for (auto & boxe : boxes) {
         boxe.active = false;
     }
@@ -165,4 +165,32 @@ void load_created_level(const int xCord[200], const int yCord[200], int count) {
         boxes[i].active = true;
         boxes[i].c = random_color();
     }
+}
+void create_level_in_list() {
+    ti_var_t appvar = ti_Open("LevelDat", "w");
+
+    if (!appvar) return;
+
+    // Write data
+    ti_Write(&boxNum, sizeof(int), 1, appvar);
+    ti_Write(createdLevelX, sizeof(uint16_t), boxNum, appvar);
+    ti_Write(createdLevelY, sizeof(uint16_t), boxNum, appvar);
+
+    // Close to save
+    ti_Close(appvar);
+
+    // Optional: Archive it so it persists
+    ti_SetArchiveStatus("LevelDat", 1);
+}
+
+void load_level_from_list() {
+    ti_var_t appvar = ti_Open("LevelDat", "r");
+
+    if (!appvar) return;
+
+    ti_Read(&boxNum, sizeof(int), 1, appvar);
+    ti_Read(createdLevelX, sizeof(uint16_t), boxNum, appvar);
+    ti_Read(createdLevelY, sizeof(uint16_t), boxNum, appvar);
+
+    ti_Close(appvar);
 }

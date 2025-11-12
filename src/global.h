@@ -77,8 +77,9 @@ extern enum ThemeOptions theme;
 extern int lives;
 extern int level;
 extern int createdTheme[];
-extern int createdLevelX[];
-extern int createdLevelY[];
+extern int boxNum;
+extern uint16_t createdLevelX[];
+extern uint16_t createdLevelY[];
 
 //global functions
 uint16_t random_color();

@@ -2,10 +2,13 @@
 #define LEVELS_H
 
 #include <sys/util.h>
+#include <fileioc.h>
 #include "global.h"
 
 void generate_connected_level(int create);
 void load_level(const int levelData[BOX_ROWS][BOX_COLS]);
-void load_created_level(const int xCord[200], const int yCord[200], int count);
+void load_created_level(const uint16_t xCord[200], const uint16_t yCord[200], int count);
+void create_level_in_list();
+void load_level_from_list();
 
 #endif //LEVELS_H

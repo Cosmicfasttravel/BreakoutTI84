@@ -8,7 +8,8 @@ enum ThemeOptions theme;
 //vars
 int lives;
 int level;
+int boxNum;
 int createdTheme[200];
-int createdLevelX[200];
-int createdLevelY[200];
+uint16_t createdLevelX[200];
+uint16_t createdLevelY[200];
 

@@ -5,7 +5,6 @@
 #include "../../include/graphx.h"
 #include "../../include/ti/getcsc.h"
 //box
-int boxNum = 0;
 int level1[BOX_ROWS][BOX_COLS] = {
     {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
     {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
@@ -165,7 +164,9 @@ int levels_menu() {
         gfx_PrintStringXY((levelOption == LCREATED) ? "-> Created Level" : "   Created Level", 60, 160);
         gfx_PrintStringXY((levelOption == LPREVIEW) ? "-> Preview" : "   Preview", 60, 180);
         gfx_PrintStringXY((levelOption == LCREATE) ? "-> Create" : "   Create", 60, 200);
-        if (level != -1 && level != 5 && level != 6 && level != 4) {
+        gfx_PrintStringXY((levelOption == LSAVE) ? "-> Save" : "   Save", 200, 80);
+        gfx_PrintStringXY((levelOption == LLOAD) ? "-> Load" : "   Load", 200, 100);
+        if (level != -1 && level != 5 && level != 6 && level != 4 && level != 7 && level != 8) {
             // make sure 4 is preview value
             gfx_PrintStringXY("Level selected: ", 30, 50);
             gfx_SetTextXY(140, 50);
@@ -188,18 +189,26 @@ int levels_menu() {
         }
         switch (key) {
             case sk_Up:
-                levelOption = static_cast<LevelOptions>((levelOption - 1 + 7) % 7);
+                levelOption = static_cast<LevelOptions>((levelOption - 1 + 9) % 9);
                 break;
             case sk_Down:
-                levelOption = static_cast<LevelOptions>((levelOption + 1) % 7);
+                levelOption = static_cast<LevelOptions>((levelOption + 1) % 9);
                 break;
             case sk_Enter:
-                if (levelOption != LPREVIEW && levelOption != LCREATE) {
+                if (levelOption != LPREVIEW && levelOption != LCREATE && levelOption != LSAVE && levelOption != LLOAD) {
                     level = static_cast<int>(levelOption) == 0 ? -1 : static_cast<int>(levelOption);
-                } else if (levelOption == LPREVIEW) {
+                }
+                else if (levelOption == LPREVIEW) {
                     preview_level(level);
-                } else if (levelOption == LCREATE) {
+                }
+                else if (levelOption == LCREATE) {
                     create_level();
+                }
+                else if (levelOption == LSAVE) {
+                    create_level_in_list();
+                }
+                else if (levelOption == LLOAD) {
+                    load_level_from_list();
                 }
                 break;
             case sk_2nd:
