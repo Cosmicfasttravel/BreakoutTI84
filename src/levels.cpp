@@ -1,7 +1,6 @@
 ﻿#include "levels.h"
 
-
-
+#include <ti/getcsc.h>
 
 
 //color (cool)
@@ -166,10 +165,33 @@ void load_created_level(const uint16_t xCord[200], const uint16_t yCord[200], in
         boxes[i].c = random_color();
     }
 }
-void create_level_in_list() {
-    ti_var_t appvar = ti_Open("LevelDat", "w");
+void create_level_in_list(int levelSave) {
+    for (auto & boxe : boxes) {
+        boxe.active = false;
+    }
+    ti_var_t appvar = 0;
+    switch (levelSave) {
+        case 1:
+            appvar = ti_Open("LvlDat1", "w");
+            gfx_PrintStringXY("Saved to level 1", 60, 60);
+            gfx_BlitBuffer();
+            while (!(os_GetCSC())) {}
+            break;
+        case 2:
+            appvar = ti_Open("LvlDat2", "w");
+            gfx_PrintStringXY("Saved to level 2", 60, 60);
+            gfx_BlitBuffer();
+            while (!(os_GetCSC())) {}
+            break;
+        case 3:
+            appvar = ti_Open("LvlDat3", "w");
+            gfx_PrintStringXY("Saved to level 3", 60, 60);
+            gfx_BlitBuffer();
+            while (!(os_GetCSC())) {}
+            break;
+        default: ;
+    }
 
-    if (!appvar) return;
 
     // Write data
     ti_Write(&boxNum, sizeof(int), 1, appvar);
@@ -179,14 +201,36 @@ void create_level_in_list() {
     // Close to save
     ti_Close(appvar);
 
-    // Optional: Archive it so it persists
-    ti_SetArchiveStatus("LevelDat", 1);
 }
 
-void load_level_from_list() {
-    ti_var_t appvar = ti_Open("LevelDat", "r");
+void load_level_from_list(int levelSave) {
+    for (auto & boxe : boxes) {
+        boxe.active = false;
+    }
+    ti_var_t appvar = 0;
+    switch (levelSave) {
+        case 1:
+            appvar = ti_Open("LvlDat1", "r");
+            gfx_PrintStringXY("Loaded level 1", 60, 60);
+            gfx_BlitBuffer();
+            while (!(os_GetCSC())) {}
+            break;
+        case 2:
+            appvar = ti_Open("LvlDat2", "r");
+            gfx_PrintStringXY("Loaded level 2", 60, 60);
+            gfx_BlitBuffer();
+            while (!(os_GetCSC())) {}
+            break;
+        case 3:
+            appvar = ti_Open("LvlDat3", "r");
+            gfx_PrintStringXY("Loaded level 3", 60, 60);
+            gfx_BlitBuffer();
+            while (!(os_GetCSC())) {}
+            break;
+        default: ;
+    }
 
-    if (!appvar) return;
+
 
     ti_Read(&boxNum, sizeof(int), 1, appvar);
     ti_Read(createdLevelX, sizeof(uint16_t), boxNum, appvar);

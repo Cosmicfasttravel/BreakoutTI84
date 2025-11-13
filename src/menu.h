@@ -40,7 +40,16 @@ enum PauseOptions {
     PAUSE_RESUME,
     PAUSE_EXIT,
 };
-
+enum SaveOptions {
+    SAVE1,
+    SAVE2,
+    SAVE3
+};
+enum LoadOptions {
+    LSAVE1,
+    LSAVE2,
+    LSAVE3
+};
 
 
 static enum MenuOption menuOption;
@@ -48,6 +57,9 @@ static enum Options options;
 static enum LevelOptions levelOption;
 static enum PauseOptions pauseOption;
 static enum ColorOptions colorOption;
+static enum SaveOptions saveOption;
+static enum LoadOptions loadOption;
+
 
 
 int main_menu(renderingMode *mode);
@@ -56,6 +68,8 @@ int levels_menu();
 void preview_level(int level);
 void create_theme();
 void create_level();
+void save_menu();
+void load_menu();
 bool pause_menu();
 extern int level1[BOX_ROWS][BOX_COLS];
 extern int level2[BOX_ROWS][BOX_COLS];

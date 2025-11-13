@@ -173,8 +173,7 @@ int levels_menu() {
             gfx_PrintInt(level, 1);
         } else if (level == -1) {
             gfx_PrintStringXY("Level selected: Random level", 30, 50);
-        }
-        else if (level == 4) {
+        } else if (level == 4) {
             gfx_PrintStringXY("Level selected: Created Level", 30, 50);
         }
         gfx_PrintStringXY("________________________________________", 0, 51);
@@ -197,24 +196,102 @@ int levels_menu() {
             case sk_Enter:
                 if (levelOption != LPREVIEW && levelOption != LCREATE && levelOption != LSAVE && levelOption != LLOAD) {
                     level = static_cast<int>(levelOption) == 0 ? -1 : static_cast<int>(levelOption);
-                }
-                else if (levelOption == LPREVIEW) {
+                } else if (levelOption == LPREVIEW) {
                     preview_level(level);
-                }
-                else if (levelOption == LCREATE) {
+                } else if (levelOption == LCREATE) {
                     create_level();
-                }
-                else if (levelOption == LSAVE) {
-                    create_level_in_list();
-                }
-                else if (levelOption == LLOAD) {
-                    load_level_from_list();
+                } else if (levelOption == LSAVE) {
+                    save_menu();
+                } else if (levelOption == LLOAD) {
+                    load_menu();
                 }
                 break;
             case sk_2nd:
                 return 0;
             default:
                 break; // Ignore other keys
+        }
+    }
+}
+
+void save_menu() {
+    while (true) {
+        gfx_FillScreen(255);
+        gfx_SetTextFGColor(0);
+        gfx_SetTextScale(2, 2);
+        gfx_PrintStringXY("Save", 10, 20);
+        gfx_PrintStringXY("_______________", 10, 22);
+        gfx_SetTextScale(1, 1);
+
+        gfx_PrintStringXY((saveOption == SAVE1) ? "-> Save 1" : "   Save 1", 60, 100);
+        gfx_PrintStringXY((saveOption == SAVE2) ? "-> Save 2" : "   Save 2", 60, 120);
+        gfx_PrintStringXY((saveOption == SAVE3) ? "-> Save 3" : "   Save 3", 60, 140);
+        gfx_BlitBuffer();
+        sk_key_t key;
+        while (!((key = os_GetCSC()))) {}
+        switch (key) {
+            case sk_Up:
+                saveOption = static_cast<SaveOptions>((saveOption - 1 + 3) % 3);
+                break;
+            case sk_Down:
+                saveOption = static_cast<SaveOptions>((saveOption + 1) % 3);
+                break;
+            case sk_Enter:
+                if (saveOption == SAVE1) {
+                    create_level_in_list(1);
+                    return;
+                }
+                if (saveOption == SAVE2) {
+                    create_level_in_list(2);
+                    return;
+                }
+                if (saveOption == SAVE3) {
+                    create_level_in_list(3);
+                    return;
+                }
+                break;
+            default: ;
+        }
+    }
+}
+
+void load_menu() {
+    while (true) {
+        gfx_FillScreen(255);
+        gfx_SetTextFGColor(0);
+        gfx_SetTextScale(2, 2);
+        gfx_PrintStringXY("Load", 10, 20);
+        gfx_PrintStringXY("_______________", 10, 22);
+        gfx_SetTextScale(1, 1);
+
+        gfx_PrintStringXY((loadOption == LSAVE1) ? "-> Save 1" : "   Save 1", 60, 100);
+        gfx_PrintStringXY((loadOption == LSAVE2) ? "-> Save 2" : "   Save 2", 60, 120);
+        gfx_PrintStringXY((loadOption == LSAVE3) ? "-> Save 3" : "   Save 3", 60, 140);
+        gfx_BlitBuffer();
+        sk_key_t key;
+        while (!((key = os_GetCSC()))) {}
+        switch (key) {
+            case sk_Up:
+                loadOption = static_cast<LoadOptions>((loadOption - 1 + 3) % 3);
+                break;
+            case sk_Down:
+                loadOption = static_cast<LoadOptions>((loadOption + 1) % 3);
+                break;
+            case sk_Enter:
+                if (loadOption == LSAVE1) {
+                    load_level_from_list(1);
+                    return;
+                }
+                if (loadOption == LSAVE2) {
+                    load_level_from_list(2);
+                    return;
+                }
+                if (loadOption == LSAVE3) {
+                    load_level_from_list(3);
+                    return;
+                }
+                break;
+            default: ;
         }
     }
 }
