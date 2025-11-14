@@ -11,7 +11,7 @@ This is a fun, work-in-progress calculator game. Ensure you download the latest 
 - Note also that this is laggier than the release version
 - This is not the latest release version
 <img width="320" height="240" alt="apng1" src="https://github.com/user-attachments/assets/069000fb-8983-41d6-a378-42ea01df96e4" />  
-- This is currently prior to the level and theme creator
+This is currently prior to the level and theme creator
 
 ## Installation Instructions
 ### Prerequisites:
