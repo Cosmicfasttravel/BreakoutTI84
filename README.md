@@ -10,7 +10,8 @@ This is a fun, work-in-progress calculator game. Ensure you download the latest 
 - Note that this is not the final version, and it is subject to change.
 - Note also that this is laggier than the release version
 - This is not the latest release version
-<img width="320" height="240" alt="apng1" src="https://github.com/user-attachments/assets/069000fb-8983-41d6-a378-42ea01df96e4" />
+<img width="320" height="240" alt="apng1" src="https://github.com/user-attachments/assets/069000fb-8983-41d6-a378-42ea01df96e4" />  
+- This is currently prior to the level and theme creator
 
 ## Installation Instructions
 ### Prerequisites:
@@ -25,7 +26,7 @@ Download it here: [arTIfiCE Shell](https://yvantt.github.io/arTIfiCE/)
 2. Connect your TI-84 Plus CE to your computer
 3. Open TI-Connect CE software
 4. Transfer the .8xp file to your calculator
-5. Launch the program through arTIfiCE or your preferred shell
+5. Launch the program through arTIfiCE or your preferred shell.  
 Important: The program will not work if launched directly from the calculator's program menu—you must use a shell.
 
 ## Building from Source
